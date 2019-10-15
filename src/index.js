@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import {createStore, combineReducers} from "redux";
 
 // import App from './App';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -16,17 +17,20 @@ import './assets/vendors/css/vendor.bundle.base.css'
 import './assets/js/off-canvas.js';
 import './assets/js/hoverable-collapse.js'
 import './assets/js/misc.js'
+
 import { faTachometerAlt, faHome, faCubes, faPeopleCarry, faFileImport, faUser, faShoppingBag, faLock, faReceipt, faCogs } from '@fortawesome/free-solid-svg-icons'
+import { Login } from './pages';
 
 library.add(faTachometerAlt,faHome,faCubes,faPeopleCarry,faFileImport,faUser,faShoppingBag,faLock,faReceipt,faCogs)
-
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route path="/admin" render={props => <Admin {...props} />} />
+        <Route path="/login" component={Login}></Route>
         <Redirect from="/" to="/admin/dashboard" />
+
       </Switch>
     </BrowserRouter>,
     document.getElementById("root"));
