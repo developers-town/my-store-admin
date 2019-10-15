@@ -7,6 +7,7 @@ import Role from './Role'
 import Setting from './Setting'
 import Supplier from './Supplier'
 import User from './User'
+import Login from './Login'
 
 export  {
     Dashboard,
@@ -17,5 +18,6 @@ export  {
     Role,
     Setting,
     Supplier,
-    User
+    User,
+    Login
 }

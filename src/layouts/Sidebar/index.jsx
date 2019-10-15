@@ -14,6 +14,7 @@ function Sidebar() {
       name: "Dashboard",
       path: "dashboard",
       icon: "tachometer-alt",
+      active: true
       },
     {
       name: "Stock",
