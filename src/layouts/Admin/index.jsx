@@ -25,7 +25,7 @@ function Admin() {
       <Navbar></Navbar>
       <div className="container-fluid page-body-wrapper">
         <Sidebar></Sidebar>
-        <div class="main-panel">
+        <div className="main-panel">
           <Switch>{getRoutes(routes)}</Switch>
           <Footer></Footer>
         </div>
