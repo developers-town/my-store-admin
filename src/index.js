@@ -55,8 +55,6 @@ const updateUserAction = {
   }
 };
 const store = createStore(reducers);
-store.dispatch(updateUserAction);
-console.log(store.getState());
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
   <BrowserRouter>
