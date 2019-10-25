@@ -1,10 +1,11 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { Navbar, Sidebar } from "../../layouts";
 import { Route, Switch } from "react-router-dom";
 import routes from "../../routes.js";
 import Footer from "../Footer";
 
-function Admin() {
+function Admin(props) {
   function getRoutes(routes) {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
@@ -22,7 +23,10 @@ function Admin() {
   }
   return (
     <div className="container-scroller">
-      <Navbar></Navbar>
+      <Provider store={props.store}>
+        <Navbar></Navbar>
+      </Provider>
+
       <div className="container-fluid page-body-wrapper">
         <Sidebar></Sidebar>
         <div className="main-panel">
@@ -33,4 +37,5 @@ function Admin() {
     </div>
   );
 }
+
 export default Admin;

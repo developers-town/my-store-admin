@@ -1,10 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logoSvg from "../../assets/images/logo.svg";
 import logoMiniSvg from "../../assets/images/logo-mini.svg";
 import face4Jpg from "../../assets/images/faces/face4.jpg";
 
-function Navbar() {
+function Navbar(props) {
   return (
     <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -53,7 +54,7 @@ function Navbar() {
                 <span className="availability-status online"></span>
               </div>
               <div className="nav-profile-text">
-                <p className="mb-1 text-black">David Greymaax</p>
+                <p className="mb-1 text-black">{props.user.userName}</p>
               </div>
             </a>
             <div
@@ -217,5 +218,7 @@ function Navbar() {
     </nav>
   );
 }
-
-export default Navbar;
+const mapStateToProps = state => ({
+  user: state.user
+});
+export default connect(mapStateToProps)(Navbar);

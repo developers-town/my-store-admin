@@ -47,13 +47,6 @@ library.add(
   faCogs
 );
 
-const updateUserAction = {
-  type: "updateUser",
-  payload: {
-    userName: "harry",
-    token: "SDHUXCZ354%%$HJKHKJHFDS@$ASF"
-  }
-};
 const store = createStore(reducers);
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
@@ -63,11 +56,18 @@ ReactDOM.render(
         path="/admin"
         render={props => (
           <Provider store={store}>
-            <Admin {...props} />
+            <Admin store={store} {...props} />
           </Provider>
         )}
       />
-      <Route path="/login" component={Login}></Route>
+      <Route
+        path="/login"
+        render={() => (
+          <Provider store={store}>
+            <Login />
+          </Provider>
+        )}
+      ></Route>
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
   </BrowserRouter>,

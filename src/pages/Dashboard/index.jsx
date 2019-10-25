@@ -8,7 +8,7 @@ const Dashboard = props => {
         <div className="row" id="proBanner">
           <div className="col-12">
             <span className="d-flex align-items-center purchase-popup">
-              <div>{props.user}</div>
+              <div>{props.user.userName}</div>
               <div>
                 <input
                   className="form-control"

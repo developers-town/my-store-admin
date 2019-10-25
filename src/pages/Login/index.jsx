@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import auth from "../../services/authService";
+import { connect } from "react-redux";
+import { updateUser } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
 import login2 from "../../assets/images/login/login2.jpg";
 
-function Login() {
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginFail, setLoginFail] = useState(false);
+  const authLogin = async e => {
+    e.preventDefault();
+    try {
+      await auth.login(email, password);
+      props.onUpdateUser(auth.getCurrentUser());
+      setLoginFail(false);
+      window.location = "/admin/dashboard";
+    } catch (ex) {
+      setLoginFail(true);
+    }
+  };
   return (
     <div>
       <div className="container-scroller">
@@ -24,7 +41,7 @@ function Login() {
               </div>
               <div style={{}} className="col-lg-6">
                 <div style={{ paddingTop: "15vh" }} className="text-center">
-                  <h1>RumLow</h1>
+                  <h1>{props.user.userName}</h1>
                 </div>
                 <div className="text-center pt-4">
                   <p style={{ color: "#888888", fontSize: "2vh" }}>
@@ -46,6 +63,7 @@ function Login() {
                         type="text"
                         className="form-control"
                         placeholder="Email"
+                        onChange={e => setEmail(e.target.value)}
                       />
                     </div>
                     <div className="my-3">
@@ -56,15 +74,23 @@ function Login() {
                         type="password"
                         className="form-control"
                         placeholder="Password"
+                        onChange={e => setPassword(e.target.value)}
                       />
                     </div>
-                    <div className="m-0 p-0">
+                    <div
+                      className={
+                        loginFail ? "m-0 p-0 d-block" : "m-0 p-0 d-none"
+                      }
+                    >
                       <p className="text-danger">
                         Your Credentials did not match our records
                       </p>
                     </div>
                     <div className="mt-5">
-                      <button className="btn btn-gradient-primary btn-rounded col-12">
+                      <button
+                        onClick={authLogin}
+                        className="btn btn-gradient-primary btn-rounded col-12"
+                      >
                         Login
                       </button>
                     </div>
@@ -87,4 +113,13 @@ function Login() {
     </div>
   );
 }
-export default Login;
+const mapStateToProps = state => ({
+  user: state.user
+});
+const mapActionsToProps = {
+  onUpdateUser: updateUser
+};
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(Login);
