@@ -1,20 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { updateUser } from "../../actions/user-actions";
+import auth from "../../services/authService";
 const Dashboard = props => {
+  const handleClick = () => {
+    console.log(auth.getCurrentUser());
+    props.onUpdateUser(auth.getCurrentUser());
+  };
   return (
     <div>
       <div className="content-wrapper">
         <div className="row" id="proBanner">
           <div className="col-12">
             <span className="d-flex align-items-center purchase-popup">
-              <div>{props.user.userName}</div>
+              <div>{props.user}</div>
               <div>
-                <input
-                  className="form-control"
-                  type="text"
-                  onChange={e => props.onUpdateUser(e.target.value)}
-                />
+                <button onClick={handleClick} className="btn btn-primary">
+                  Click Me
+                </button>
               </div>
               <a
                 href="https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template"
@@ -500,8 +503,6 @@ const Dashboard = props => {
     </div>
   );
 };
-
-const onUpdateUser = props => {};
 
 const mapStateToProps = state => ({
   user: state.user

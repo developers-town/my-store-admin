@@ -1,11 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
+import auth from "../../services/authService";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logoSvg from "../../assets/images/logo.svg";
 import logoMiniSvg from "../../assets/images/logo-mini.svg";
 import face4Jpg from "../../assets/images/faces/face4.jpg";
 
 function Navbar(props) {
+  const handleLogOut = event => {
+    event.preventDefault();
+    auth.logout();
+    window.location = "/login";
+  };
   return (
     <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -54,7 +60,7 @@ function Navbar(props) {
                 <span className="availability-status online"></span>
               </div>
               <div className="nav-profile-text">
-                <p className="mb-1 text-black">{props.user.userName}</p>
+                <p className="mb-1 text-black">{auth.getCurrentUser()}</p>
               </div>
             </a>
             <div
@@ -66,8 +72,8 @@ function Navbar(props) {
                 Log{" "}
               </a>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="/">
-                <i className="mdi mdi-logout mr-2 text-primary"></i> Signout{" "}
+              <a onClick={handleLogOut} className="dropdown-item" href="/">
+                <i className="mdi mdi-logout mr-2 text-primary"></i> Signout
               </a>
             </div>
           </li>

@@ -22,11 +22,20 @@ export async function login(email, password) {
 
 export function getCurrentUser() {
   const jwt = localStorage.getItem("userToken");
-  const user = jwtDecode(jwt);
-  return user.id;
+  try {
+    const user = jwtDecode(jwt);
+    return user.id;
+  } catch (ex) {
+    return null;
+  }
+}
+
+export function logout() {
+  localStorage.removeItem("userToken");
 }
 
 export default {
+  logout,
   login,
   getCurrentUser
 };

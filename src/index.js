@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 
 // import App from './App';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import auth from "./services/authService";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -33,7 +35,7 @@ import {
 import { Login } from "./pages";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import reducers from "./reducers";
+import allReducers from "./reducers";
 library.add(
   faTachometerAlt,
   faHome,
@@ -47,7 +49,11 @@ library.add(
   faCogs
 );
 
-const store = createStore(reducers);
+const store = createStore(
+  allReducers,
+  { user: auth.getCurrentUser() },
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
   <BrowserRouter>

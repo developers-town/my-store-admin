@@ -1,11 +1,11 @@
 import { UPDATE_USER } from "../actions/user-actions";
 
-const userReducer = (state, action) => {
+const userReducer = (state = "", action) => {
   switch (action.type) {
     case UPDATE_USER:
-      return action.payload.user.userName;
+      return action.payload.user;
     default:
-      return "no User";
+      return null;
   }
 };
 

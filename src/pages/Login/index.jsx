@@ -41,7 +41,7 @@ function Login(props) {
               </div>
               <div style={{}} className="col-lg-6">
                 <div style={{ paddingTop: "15vh" }} className="text-center">
-                  <h1>{props.user.userName}</h1>
+                  <h1>{props.user}</h1>
                 </div>
                 <div className="text-center pt-4">
                   <p style={{ color: "#888888", fontSize: "2vh" }}>
