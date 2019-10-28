@@ -3,14 +3,17 @@ import auth from "../../services/authService";
 import { connect } from "react-redux";
 import { updateUser } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
+import Loading from "../../assets/images/loading.svg";
 // import login2 from "../../assets/images/login/login2.jpg";
 
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginFail, setLoginFail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const authLogin = async e => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await auth.login(email, password);
       props.onUpdateUser(auth.getCurrentUser());
@@ -18,11 +21,16 @@ function Login(props) {
       window.location = "/admin/dashboard";
     } catch (ex) {
       setLoginFail(true);
+      setIsLoading(false);
     }
   };
   return (
     <div>
-      <div className="fixed-top vh-100">
+      <div
+        className={isLoading ? "fixed-top vh-100 d-flex" : "d-none"}
+        style={{ backgroundColor: "rgba(255, 255, 128, .5)" }}
+      >
+        <img className="align-self-center mx-auto" src={Loading} alt="" />
       </div>
       <div className="container-scroller">
         <div className="container-fluid page-body-wrapper full-page-wrapper">
