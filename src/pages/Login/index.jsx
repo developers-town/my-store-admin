@@ -3,7 +3,7 @@ import auth from "../../services/authService";
 import { connect } from "react-redux";
 import { updateUser } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
-import login2 from "../../assets/images/login/login2.jpg";
+// import login2 from "../../assets/images/login/login2.jpg";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -22,6 +22,8 @@ function Login(props) {
   };
   return (
     <div>
+      <div className="fixed-top vh-100">
+      </div>
       <div className="container-scroller">
         <div className="container-fluid page-body-wrapper full-page-wrapper">
           <div className="content-wrapper d-flex flex-row align-items-center justify-content-center auth">

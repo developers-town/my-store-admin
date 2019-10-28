@@ -51,28 +51,40 @@ library.add(
 
 const store = createStore(
   allReducers,
-  { user: auth.getCurrentUser() },
+  {},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+// console.log(window.localStorage.getItem('userToken'));
+// const e = store.getState();
+// console.log(proce);
+
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route
         path="/admin"
-        render={props => (
-          <Provider store={store}>
-            <Admin store={store} {...props} />
-          </Provider>
-        )}
+        render={props =>
+          !auth.getCurrentUser() ? (
+            <Redirect to="/login" />
+          ) : (
+            <Provider store={store}>
+              <Admin store={store} {...props} />
+            </Provider>
+          )
+        }
       />
       <Route
         path="/login"
-        render={() => (
-          <Provider store={store}>
-            <Login />
-          </Provider>
-        )}
+        render={() =>
+          auth.getCurrentUser() ? (
+            <Redirect to="/" />
+          ) : (
+            <Provider store={store}>
+              <Login />
+            </Provider>
+          )
+        }
       ></Route>
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>

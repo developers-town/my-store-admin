@@ -1,15 +1,16 @@
 import axios from "axios";
+// import {apiEndpoint} from "../config.json";
 import jwtDecode from "jwt-decode";
 
 export async function login(email, password) {
   try {
     return axios
-      .post("https://nexious-store-api.herokuapp.com/api/staff/login", {
+      .post(process.env.REACT_APP_API_ENDPOINT + "/staff/login", {
         email,
         password
       })
       .then(response => {
-        localStorage.setItem("userToken", response.data.payload.token);
+        localStorage.setItem(process.env.REACT_APP_TOKEN, response.data.payload.token);
       })
       .catch(ex => {
         console.log(ex);
@@ -21,17 +22,19 @@ export async function login(email, password) {
 }
 
 export function getCurrentUser() {
-  const jwt = localStorage.getItem("userToken");
+  const jwt = localStorage.getItem(process.env.REACT_APP_TOKEN);
   try {
     const user = jwtDecode(jwt);
+    // console.log(user);
     return user.id;
   } catch (ex) {
+    // console.log(ex);
     return null;
   }
 }
 
 export function logout() {
-  localStorage.removeItem("userToken");
+  localStorage.removeItem(process.env.REACT_APP_TOKEN);
 }
 
 export default {

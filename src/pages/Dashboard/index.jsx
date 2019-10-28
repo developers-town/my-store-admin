@@ -10,33 +10,6 @@ const Dashboard = props => {
   return (
     <div>
       <div className="content-wrapper">
-        <div className="row" id="proBanner">
-          <div className="col-12">
-            <span className="d-flex align-items-center purchase-popup">
-              <div>{props.user}</div>
-              <div>
-                <button onClick={handleClick} className="btn btn-primary">
-                  Click Me
-                </button>
-              </div>
-              <a
-                href="https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template"
-                target="blank"
-                className="btn ml-auto download-button"
-              >
-                Download Free Version
-              </a>
-              <a
-                href="https://www.bootstrapdash.com/product/purple-bootstrap-4-admin-template/"
-                target="blank"
-                className="btn purchase-button"
-              >
-                Upgrade To Pro
-              </a>
-              <i className="mdi mdi-close" id="bannerClose"></i>
-            </span>
-          </div>
-        </div>
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
