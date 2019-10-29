@@ -6,7 +6,7 @@ const userReducer = (state = auth.getCurrentUser(), action) => {
     case UPDATE_USER:
       return action.payload.user;
     default:
-      return state;
+      return null;
   }
 };
 
