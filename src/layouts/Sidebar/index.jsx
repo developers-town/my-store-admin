@@ -12,58 +12,58 @@ function Sidebar() {
   const [sidebar] = useState([
     {
       name: "Dashboard",
-      path: "dashboard",
+      path: "/admin/dashboard",
       icon: "tachometer-alt",
       active: true
       },
     {
       name: "Stock",
-      path: "stock",
+      path: "/admin/stock",
       icon: "cubes",
   
     },
     {
       name: "Supplier",
-      path: "supplier",
+      path: "/admin/supplier",
       icon: "people-carry",
   
     },
     {
       name: "Import",
-      path: "Import",
+      path: "/admin/Import",
       icon: "file-import",
   
     },
     {
       name: "Product",
-      path: "product",
+      path: "/admin/product",
       icon: "shopping-bag",
   
     },
     {
       name: "User",
-      path: "user",
+      path: "/admin/user",
       icon: "user",
   
     }
     ,
     {
       name: "Roles & Permissions",
-      path: "role-permission",
+      path: "/admin/role-permission",
       icon: "lock",
   
     }
     ,
     {
       name: "Report",
-      path: "report",
+      path: "/admin/report",
       icon: "receipt",
   
     }
     ,
     {
       name: "Settings",
-      path: "setting",
+      path: "/admin/setting",
       icon: "cogs",
   
     }
