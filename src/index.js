@@ -87,7 +87,6 @@ ReactDOM.render(
         }
       ></Route>
       <Redirect from="/" to="/admin/dashboard" />
-
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

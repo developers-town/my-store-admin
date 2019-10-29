@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 
 export async function login(email, password) {
   try {
-    return axios
+    return await axios
       .post(ENV.API_ENDPOINT + "staff/login", {
         email,
         password

@@ -16,9 +16,8 @@ function Login(props) {
     setIsLoading(true);
     try {
       await auth.login(email, password);
-      props.onUpdateUser(auth.getCurrentUser());
       setLoginFail(false);
-      window.location = "/admin/dashboard";
+      window.location = "admin/dashboard";
     } catch (ex) {
       setLoginFail(true);
       setIsLoading(false);
