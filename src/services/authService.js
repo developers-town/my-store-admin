@@ -25,10 +25,10 @@ export function getCurrentUser() {
   const jwt = localStorage.getItem(ENV.APP_TOKEN);
   try {
     const user = jwtDecode(jwt);
-    // console.log(user);
-    return user.id;
+    console.log(user);
+    return user._id;
   } catch (ex) {
-    // console.log(ex);
+    console.log(ex);
     return null;
   }
 }
