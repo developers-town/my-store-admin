@@ -1,4 +1,6 @@
 import React from "react";
+import {Link} from 'react-router-dom';
+import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard() {
   return (
@@ -9,9 +11,9 @@ function Dashboard() {
             <i className="mdi mdi-account"></i>
           </span>
           User Accounts{""}
-          <button className="btn btn-outline-primary ml-2">
+          <a href='/admin/user/create'><button className="btn btn-outline-primary ml-2">
             Create New User
-          </button>
+          </button></a>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">
@@ -23,137 +25,20 @@ function Dashboard() {
         </nav>
       </div>
       <div className="row">
-        <div className="col-8 grid-margin">
+        <div className="col-lg-7 col-4 grid-margin">
           <div className="card">
             <div className="card-body">
               <h1 className="card-title">All Users</h1>
               <div className="table-responsive">
-                <table className="table table-striped">
-                  <thead>
-                    <th>ID</th>
-                    <th>UserName</th>
-                    <th>Role</th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="py-1">010</td>
-                      <td> Herman Beck </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-success"
-                            role="progressbar"
-                            style={{ width: "25%" }}
-                            aria-valuenow="25"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">001</td>
-                      <td> Messsy Adam </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-danger"
-                            role="progressbar"
-                            style={{ width: "75%" }}
-                            aria-valuenow="75"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">001</td>
-                      <td> John Richards </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-warning"
-                            role="progressbar"
-                            style={{ width: "90%" }}
-                            aria-valuenow="90"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">002</td>
-                      <td> Peter Meggik </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-primary"
-                            role="progressbar"
-                            style={{ width: "50%" }}
-                            aria-valuenow="50"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">003</td>
-                      <td> Edward </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-danger"
-                            role="progressbar"
-                            style={{ width: "35%" }}
-                            aria-valuenow="35"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">004</td>
-                      <td> John Doe </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-info"
-                            role="progressbar"
-                            style={{ width: "65%" }}
-                            aria-valuenow="65"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">005</td>
-                      <td> Henry Tom </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-warning"
-                            role="progressbar"
-                            style={{ width: "20%" }}
-                            aria-valuenow="20"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <Table
+                  header={["ID", "Name", "Role"]}
+                  apiEndpoint="user"
+                ></Table>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-4 grid-margin">
+        <div className="col-5 grid-margin">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">
@@ -206,9 +91,11 @@ function Dashboard() {
               <div className="pt-3">
                 <table className="table">
                   <thead>
-                    <th>ID</th>
-                    <th>Picture</th>
-                    <th>Name</th>
+                    <tr>
+                      <th>ID</th>
+                      <th>Picture</th>
+                      <th>Name</th>
+                    </tr>
                   </thead>
                   <tbody>
                     <tr>
@@ -244,9 +131,11 @@ function Dashboard() {
               <div className="pt-3">
                 <table className="table">
                   <thead>
-                    <th>ID</th>
-                    <th>Picture</th>
-                    <th>Name</th>
+                    <tr>
+                      <th>ID</th>
+                      <th>Picture</th>
+                      <th>Name</th>
+                    </tr>
                   </thead>
                   <tbody>
                     <tr>

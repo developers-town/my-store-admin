@@ -9,7 +9,17 @@ import {
   Supplier,
   User
 } from "./pages";
-
+import UserCreate from "./pages/User/createUser";
+function checkRoute(path) {
+  var route = window.location.pathname;
+  if (route === "/admin/user/create/") {
+    return UserCreate;
+  } else if (route === "/admin/user/create") {
+    return UserCreate;
+  } else {
+    return User;
+  }
+}
 const routes = [
   {
     path: "/dashboard",
@@ -26,7 +36,13 @@ const routes = [
   {
     path: "/user",
     name: "User",
-    component: User,
+    component: checkRoute("user"),
+    layout: "/admin"
+  },
+  {
+    path: "/user/create",
+    name: "createUser",
+    component: checkRoute("create"),
     layout: "/admin"
   },
   {
