@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard() {
@@ -11,9 +11,11 @@ function Dashboard() {
             <i className="mdi mdi-account"></i>
           </span>
           User Accounts{""}
-          <a href='/admin/user/create'><button className="btn btn-outline-primary ml-2">
-            Create New User
-          </button></a>
+          <a href="/admin/user/create">
+            <button className="btn btn-outline-primary ml-2">
+              Create New User
+            </button>
+          </a>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">
@@ -25,7 +27,7 @@ function Dashboard() {
         </nav>
       </div>
       <div className="row">
-        <div className="col-lg-7 col-4 grid-margin">
+        <div className="col-xl-8 col-lg-7 col-4 grid-margin">
           <div className="card">
             <div className="card-body">
               <h1 className="card-title">All Users</h1>
@@ -38,7 +40,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="col-5 grid-margin">
+        <div className="col-xl-4 col-lg-5 col-5 grid-margin">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">
