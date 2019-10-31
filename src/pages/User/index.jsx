@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard() {
+  const a = [1, 2, 3, 4, 5, 6];
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -34,6 +35,7 @@ function Dashboard() {
               <div className="table-responsive">
                 <Table
                   header={["ID", "Name", "Role"]}
+                  data={[[1, 2, 3], [4, 5, 6], [4, 5, 6], [4, 5, 6], [4, 5, 6]]}
                   apiEndpoint="user"
                 ></Table>
               </div>
