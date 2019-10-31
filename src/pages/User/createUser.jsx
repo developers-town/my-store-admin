@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import ENV from "../../config/config.json";
 import FormGroup from "../../components/FormGroup";
 
 const CreateUser = () => {
+  const [data, setData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: ""
+  });
+
+  const handleCreateClick = e => {
+    e.preventDefault();
+    axios
+      .post(ENV.API_ENDPOINT + "user/signup", data, {
+        headers: {
+          "x-store": localStorage.getItem(ENV.APP_TOKEN)
+        }
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(ex => {
+        console.log(ex);
+        throw new Error(ex);
+      });
+  };
+  useEffect(() => {}, []);
+  // const [first_name, setfirst_name] = useState();
+  // const [last_name, setlast_name] = useState();
+  // const [userName, setUsername] = useState();
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
+  // const handleInputChange = e => {
+  //   console.log(e.target.value);
+  // };
   return (
     <React.Fragment>
       <div className="content-wrapper">
@@ -59,23 +95,83 @@ const CreateUser = () => {
                 </div>
                 <div className="d-flex">
                   <div className="flex-grow-1 pr-2">
-                    <FormGroup label="First Name"></FormGroup>
+                    <FormGroup
+                      onInputChange={e =>
+                        setData({
+                          first_name: e.target.value,
+                          last_name: data.last_name,
+                          username: data.username,
+                          email: data.email,
+                          password: data.password
+                        })
+                      }
+                      label="First Name"
+                    ></FormGroup>
                   </div>
                   <div className="flex-grow-1 pl-2">
-                    <FormGroup label="Last Name"></FormGroup>
+                    <FormGroup
+                      onInputChange={e =>
+                        setData({
+                          first_name: data.first_name,
+                          last_name: e.target.value,
+                          username: data.username,
+                          email: data.email,
+                          password: data.password
+                        })
+                      }
+                      label="Last Name"
+                    ></FormGroup>
                   </div>
                 </div>
                 <div className="d-flex">
                   <div className="flex-grow-1 pr-2">
-                    <FormGroup label="Username"></FormGroup>
+                    <FormGroup
+                      label="Username"
+                      onInputChange={e =>
+                        setData({
+                          first_name: data.first_name,
+                          last_name: data.last_name,
+                          username: e.target.value,
+                          email: data.email,
+                          password: data.password
+                        })
+                      }
+                    ></FormGroup>
                   </div>
                   <div className="flex-grow-1 pl-2">
-                    <FormGroup label="Email" inputType="email"></FormGroup>
+                    <FormGroup
+                      onInputChange={e =>
+                        setData({
+                          first_name: data.first_name,
+                          last_name: data.last_name,
+                          username: data.username,
+                          email: e.target.value,
+                          password: data.password
+                        })
+                      }
+                      label="Email"
+                      inputType="email"
+                    ></FormGroup>
                   </div>
                 </div>
-                <FormGroup label="Password" inputType="password"></FormGroup>
+                <FormGroup
+                  onInputChange={e =>
+                    setData({
+                      first_name: data.first_name,
+                      last_name: data.last_name,
+                      username: data.username,
+                      email: data.email,
+                      password: e.target.value
+                    })
+                  }
+                  label="Password"
+                  inputType="password"
+                ></FormGroup>
                 <div>
-                  <button className="btn btn-block btn-primary">
+                  <button
+                    onClick={handleCreateClick}
+                    className="btn btn-block btn-primary"
+                  >
                     Create User
                   </button>
                 </div>

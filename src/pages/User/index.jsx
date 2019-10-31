@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import ENV from "../../config/config.json";
+import axios from "axios";
+
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
-function Dashboard() {
+function Dashboard(props) {
   const a = [1, 2, 3, 4, 5, 6];
+  const [tableData, setTableData] = useState([]);
+  async function callUserApi() {
+    const response = await axios.get(ENV.API_ENDPOINT + "user", {
+      headers: {
+        "x-store": localStorage.getItem(ENV.APP_TOKEN)
+      }
+    });
+    return response;
+  }
+  useEffect(() => {
+    callUserApi().then(response => {
+      // console.log(response.data.payload);
+      setTableData(response.data.payload);
+      //   console.log(tableData);
+    });
+    // console.log(data);
+  });
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -33,11 +54,15 @@ function Dashboard() {
             <div className="card-body">
               <h1 className="card-title">All Users</h1>
               <div className="table-responsive">
-                <Table
-                  header={["ID", "Name", "Role"]}
-                  data={[[1, 2, 3], [4, 5, 6], [4, 5, 6], [4, 5, 6], [4, 5, 6]]}
-                  apiEndpoint="user"
-                ></Table>
+                <Table header={["ID", "Name", "Role"]} apiEndpoint="user">
+                  {tableData.map(data => (
+                    <tr key={data._id}>
+                      <td>{data._id}</td>
+                      <td>{data.username}</td>
+                      <td>{data.role}</td>
+                    </tr>
+                  ))}
+                </Table>
               </div>
             </div>
           </div>
@@ -167,4 +192,7 @@ function Dashboard() {
     </div>
   );
 }
-export default Dashboard;
+const mapStateToProps = state => ({
+  table: state.table
+});
+export default connect(mapStateToProps)(Dashboard);

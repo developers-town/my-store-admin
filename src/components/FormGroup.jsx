@@ -9,7 +9,7 @@ const FormGroup = props => {
           <h6>{props.label}</h6>
         </label>
         <input
-          onChange={e => props.onSetUsername(e.target.value)}
+          onChange={props.onInputChange}
           className="form-control"
           type={props.inputType}
         />
