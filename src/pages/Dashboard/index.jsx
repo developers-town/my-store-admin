@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { updateUser } from "../../actions/user-actions";
-import auth from "../../services/authService";
+// import auth from "../../services/authService";
 const Dashboard = props => {
-  const handleClick = () => {
-    console.log(auth.getCurrentUser());
-    props.onUpdateUser(auth.getCurrentUser());
-  };
+  // const handleClick = () => {
+  //   console.log(auth.getCurrentUser());
+  //   props.onUpdateUser(auth.getCurrentUser());
+  // };
   return (
     <div>
       <div className="content-wrapper">

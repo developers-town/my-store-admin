@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ENV from "../../config/config.json";
 import axios from "axios";
@@ -24,7 +24,7 @@ function Dashboard(props) {
       //   console.log(tableData);
     });
     // console.log(data);
-  });
+  },[]);
   return (
     <div className="content-wrapper">
       <div className="page-header">
