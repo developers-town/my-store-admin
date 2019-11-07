@@ -9,7 +9,7 @@ import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
   const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
-  const [responStatus,setResponStatus] = useState(false)
+  const [responStatus, setResponStatus] = useState(false);
 
   async function callUserApi() {
     const response = await axios.get(ENV.API_ENDPOINT + "user", {
@@ -23,11 +23,10 @@ function Dashboard(props) {
     callUserApi().then(response => {
       // console.log(response.data.payload);
       setTableData(response.data.payload);
-      setResponStatus(true)
-      //   console.log(tableData);
+      setResponStatus(true);
     });
     // console.log(data);
-  },[]);
+  }, []);
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -57,7 +56,11 @@ function Dashboard(props) {
             <div className="card-body">
               <h1 className="card-title">All Users</h1>
               <div className="table-responsive">
-                <Table header={["ID", "Name", "Role"]} apiEndpoint="user" responStatus={responStatus}>
+                <Table
+                  header={["ID", "Name", "Role"]}
+                  apiEndpoint="user"
+                  responStatus={responStatus}
+                >
                   {tableData.map(data => (
                     <tr key={data._id}>
                       <td>{data._id}</td>
