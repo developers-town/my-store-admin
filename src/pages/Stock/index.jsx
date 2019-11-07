@@ -9,6 +9,7 @@ import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Stock(props) {
   const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
+  const [responStatus,setResponStatus] = useState(false)
   async function callUserApi() {
     const response = await axios.get(ENV.API_ENDPOINT + "stock", {
       headers: {
@@ -19,8 +20,9 @@ function Stock(props) {
   }
   useEffect(() => {
     callUserApi().then(response => {
-      console.log(response.data.payload);
+      // console.log(response.data.payload);
       setTableData(response.data.payload);
+      setResponStatus(true)
       //   console.log(tableData);
     });
     // console.log(data);
@@ -61,12 +63,12 @@ function Stock(props) {
             <div className="card-body">
               <h1 className="card-title">All Stocks</h1>
               <div className="table-responsive">
-                <Table header={["ID", "Name", "Role"]} apiEndpoint="user">
+                <Table header={["ID", "Quantity","Date"]} apiEndpoint="user" responStatus={responStatus}>
                   {tableData.map(data => (
                     <tr key={data._id}>
                       <td>{data._id}</td>
-                      <td>{data.username}</td>
-                      <td>{data.role}</td>
+                      <td>{data.quantity}</td>
+                      <td>{data.create_date}</td>
                     </tr>
                   ))}
                 </Table>

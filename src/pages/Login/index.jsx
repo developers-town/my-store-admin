@@ -3,7 +3,7 @@ import auth from "../../services/authService";
 import { connect } from "react-redux";
 import { updateUser } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
-import Loading from "../../assets/images/loading.svg";
+import Loading from "../../assets/images/rolling-loading.svg";
 // import login2 from "../../assets/images/login/login2.jpg";
 
 function Login(props) {
@@ -27,7 +27,7 @@ function Login(props) {
     <div>
       <div
         className={isLoading ? "fixed-top vh-100 d-flex" : "d-none"}
-        style={{ backgroundColor: "rgba(255, 255, 128, .5)" }}
+        style={{ backgroundColor: "rgba(255, 255, 255, .5)" }}
       >
         <img className="align-self-center mx-auto" src={Loading} alt="" />
       </div>
