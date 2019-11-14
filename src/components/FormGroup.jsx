@@ -13,6 +13,7 @@ const FormGroup = props => {
           className="form-control"
           type={props.inputType}
         />
+        <span className="text-danger" style={{fontSize:'0.6rem'}}>{props.validation ? ('Please fill '+ props.label):''}</span>
       </div>
     </React.Fragment>
   );
