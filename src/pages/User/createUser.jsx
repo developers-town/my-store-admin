@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import ENV from "../../config/config.json";
 import FormGroup from "../../components/FormGroup";
+import Loading from "../../assets/images/rolling-loading.svg";
 
 const CreateUser = () => {
   const [data, setData] = useState({
@@ -13,35 +14,62 @@ const CreateUser = () => {
     email: "",
     password: ""
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseStatus, setResponseStatus] = useState({
+    status: "",
+    type: ""
+  });
   const handleCreateClick = e => {
     e.preventDefault();
+    var mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (
+      data.first_name.length > 2 &&
+      data.last_name.length > 2 &&
+      data.username.length > 2 &&
+      data.email.match(mailformat) &&
+      data.password.length > 2
+    ) {
+      setIsLoading(true);
+      postData();
+    }
+  };
+
+  function postData() {
+    var parseBody = JSON.stringify(data);
+    var body = JSON.parse(parseBody);
+    window.scrollTo(0, 0);
     axios
-      .post(ENV.API_ENDPOINT + "user/signup", data, {
-        headers: {
-          "x-store": localStorage.getItem(ENV.APP_TOKEN)
-        }
-      })
+      .post(ENV.API_ENDPOINT + "user/signup", body)
       .then(response => {
+        setIsLoading(false);
+        setResponseStatus({
+          status: "User have been created!",
+          type: "alert-success"
+        });
         console.log(response);
       })
       .catch(ex => {
+        setIsLoading(false);
+        setResponseStatus({
+          status: "Error! Please try again",
+          type: "alert-danger"
+        });
         console.log(ex);
-        throw new Error(ex);
+        // throw new Error(ex);
       });
-  };
-  useEffect(() => {}, []);
-  // const [first_name, setfirst_name] = useState();
-  // const [last_name, setlast_name] = useState();
-  // const [userName, setUsername] = useState();
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
-  // const handleInputChange = e => {
-  //   console.log(e.target.value);
-  // };
+  }
   return (
     <React.Fragment>
+      <div
+        className={isLoading ? "fixed-top vh-100 d-flex" : "d-none"}
+        style={{ backgroundColor: "rgba(255, 255, 255, .5)" }}
+      >
+        <img className="align-self-center mx-auto" src={Loading} alt="" />
+      </div>
       <div className="content-wrapper">
+        <div className={"alert " + responseStatus.type} role="alert">
+          {responseStatus.status}
+        </div>
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
@@ -49,7 +77,7 @@ const CreateUser = () => {
             </span>
             Create New User{""}
           </h3>
-          <div></div>
+
           <nav aria-label="breadcrumb">
             <ul className="breadcrumb">
               <li
@@ -106,6 +134,7 @@ const CreateUser = () => {
                         })
                       }
                       label="First Name"
+                      validation={data.first_name.length < 3}
                     ></FormGroup>
                   </div>
                   <div className="flex-grow-1 pl-2">
@@ -119,6 +148,7 @@ const CreateUser = () => {
                           password: data.password
                         })
                       }
+                      validation={data.last_name.length < 3}
                       label="Last Name"
                     ></FormGroup>
                   </div>
@@ -126,6 +156,7 @@ const CreateUser = () => {
                 <div className="d-flex">
                   <div className="flex-grow-1 pr-2">
                     <FormGroup
+                      validation={data.username.length < 3}
                       label="Username"
                       onInputChange={e =>
                         setData({
@@ -149,6 +180,11 @@ const CreateUser = () => {
                           password: data.password
                         })
                       }
+                      validation={
+                        !data.email.match(
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                        )
+                      }
                       label="Email"
                       inputType="email"
                     ></FormGroup>
@@ -164,6 +200,7 @@ const CreateUser = () => {
                       password: e.target.value
                     })
                   }
+                  validation={data.password.length < 4}
                   label="Password"
                   inputType="password"
                 ></FormGroup>
