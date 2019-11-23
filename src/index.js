@@ -1,8 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import {createStore, combineReducers} from "redux";
-
-// import App from './App';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import auth from "./services/authService";
 
@@ -14,8 +11,6 @@ import { Admin } from "./layouts";
 import "./assets/css/style.css";
 import "./assets/vendors/mdi/css/materialdesignicons.min.css";
 import "./assets/vendors/css/vendor.bundle.base.css";
-// import './assets/vendors/js/vendor.bundle.base.js'
-// import './assets/vendors/chart.js/Chart.min.js'
 import "./assets/js/off-canvas.js";
 import "./assets/js/hoverable-collapse.js";
 import "./assets/js/misc.js";
@@ -54,11 +49,6 @@ const store = createStore(
   {},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-// console.log(window.localStorage.getItem('userToken'));
-// const e = store.getState();
-// console.log(proce);
-
-// ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
