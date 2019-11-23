@@ -1,38 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import ENV from "../../config/config.json";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
+import { actionGet } from "../../reducers/actionCallApi";
+import {Link} from 'react-router-dom'
 
 function Stock(props) {
-  const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
-  const [responStatus,setResponStatus] = useState(false)
-  async function callUserApi() {
-    const response = await axios.get(ENV.API_ENDPOINT + "stock", {
-      headers: {
-        "x-store": localStorage.getItem(ENV.APP_TOKEN)
-      }
-    });
-    return response;
-  }
+  const [responStatus, setResponStatus] = useState(false);
   useEffect(() => {
-    callUserApi().then(response => {
-      console.log(response.data);
+    actionGet("stock").then(response => {
+      // console.log(response.data);
       setTableData(response.data.payload);
-      setResponStatus(true)
-      //   console.log(tableData);
+      setResponStatus(true);
     });
-    // console.log(data);
-  },[]);
+  }, []);
   return (
     <div className="content-wrapper">
       <div className="page-header">
         <h3 className="page-title">
           <span className="page-title-icon bg-gradient-primary text-white mr-2">
-          <div className="d-flex h-100">
+            <div className="d-flex h-100">
               <FontAwesomeIcon
                 className="align-self-center mx-auto "
                 icon="cubes"
@@ -42,11 +31,11 @@ function Stock(props) {
             </div>
           </span>
           Stock{""}
-          <a href="/admin/stock/create">
+          <Link to='/admin/stock-create'>
             <button className="btn btn-outline-primary ml-2">
               Create Stock
             </button>
-          </a>
+          </Link>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">
@@ -63,7 +52,11 @@ function Stock(props) {
             <div className="card-body">
               <h1 className="card-title">All Stocks</h1>
               <div className="table-responsive">
-                <Table header={["ID", "Quantity","Date"]} apiEndpoint="user" responStatus={responStatus}>
+                <Table
+                  header={["ID", "Quantity", "Date"]}
+                  apiEndpoint="user"
+                  responStatus={responStatus}
+                >
                   {tableData.map(data => (
                     <tr key={data._id}>
                       <td>{data._id}</td>

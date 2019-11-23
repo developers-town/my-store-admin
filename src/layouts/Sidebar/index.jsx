@@ -15,57 +15,46 @@ function Sidebar() {
       path: "/admin/dashboard",
       icon: "tachometer-alt",
       active: true
-      },
-    {
-      name: "Stock",
-      path: "/admin/stock",
-      icon: "cubes",
-  
-    },
-    {
-      name: "Supplier",
-      path: "/admin/supplier",
-      icon: "people-carry",
-  
-    },
-    {
-      name: "Import",
-      path: "/admin/Import",
-      icon: "file-import",
-  
     },
     {
       name: "Product",
       path: "/admin/product",
-      icon: "shopping-bag",
-  
+      icon: "shopping-bag"
+    },
+    {
+      name: "Stock",
+      path: "/admin/stock",
+      icon: "cubes"
+    },
+    {
+      name: "Supplier",
+      path: "/admin/supplier",
+      icon: "people-carry"
+    },
+    {
+      name: "Import",
+      path: "/admin/Import",
+      icon: "file-import"
     },
     {
       name: "User",
       path: "/admin/user",
-      icon: "user",
-  
-    }
-    ,
+      icon: "user"
+    },
     {
       name: "Roles & Permissions",
       path: "/admin/role-permission",
-      icon: "lock",
-  
-    }
-    ,
+      icon: "lock"
+    },
     {
       name: "Report",
       path: "/admin/report",
-      icon: "receipt",
-  
-    }
-    ,
+      icon: "receipt"
+    },
     {
       name: "Settings",
       path: "/admin/setting",
-      icon: "cogs",
-  
+      icon: "cogs"
     }
   ]);
   return (
@@ -84,7 +73,7 @@ function Sidebar() {
             <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
           </a>
         </li>
-        {sidebar.map((sb,id) => (
+        {sidebar.map((sb, id) => (
           <SidebarButton
             key={id}
             sidebarName={sb.name}

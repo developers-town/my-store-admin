@@ -5,9 +5,9 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
+import {Link} from "react-router-dom"
 
 function Product(props) {
-  const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
   const [responStatus,setResponStatus] = useState(false)
 
@@ -43,11 +43,11 @@ function Product(props) {
             </div>
           </span>
           Product{""}
-          <a href="/admin/Product/create">
+          <Link to="/admin/product-create">
             <button className="btn btn-outline-primary ml-2">
               Create Product
             </button>
-          </a>
+          </Link>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">

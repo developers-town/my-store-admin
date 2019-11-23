@@ -8,6 +8,9 @@ import Setting from './Setting'
 import Supplier from './Supplier'
 import User from './User'
 import Login from './Login'
+import userCreate from './User/createUser.jsx'
+import stockCreate from './Stock/stockCreate.jsx'
+import productCreate from './Product/productCreate.jsx'
 
 export  {
     Dashboard,
@@ -19,5 +22,8 @@ export  {
     Setting,
     Supplier,
     User,
-    Login
+    Login,
+    userCreate,
+    stockCreate,
+    productCreate
 }
