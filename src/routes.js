@@ -7,9 +7,11 @@ import {
   Role,
   Setting,
   Supplier,
-  User
+  User,
+  userCreate,
+  stockCreate,
+  productCreate
 } from "./pages";
-import UserCreate from "./pages/User/createUser";
 
 const routes = [
   {
@@ -25,6 +27,12 @@ const routes = [
     layout: "/admin"
   },
   {
+    path: "/stock-create",
+    name: "StockCreate",
+    component: stockCreate,
+    layout: "/admin"
+  },
+  {
     path: "/user",
     name: "User",
     component: User,
@@ -33,7 +41,7 @@ const routes = [
   {
     path: "/user-create",
     name: "createUser",
-    component: UserCreate,
+    component: userCreate,
     layout: "/admin"
   },
   {
@@ -64,6 +72,12 @@ const routes = [
     path: "/product",
     name: "Product",
     component: Product,
+    layout: "/admin"
+  },
+  {
+    path: "/product-create",
+    name: "ProductCreate",
+    component: productCreate,
     layout: "/admin"
   },
   {

@@ -12,6 +12,7 @@ const FormGroup = props => {
           onChange={props.onInputChange}
           className="form-control"
           type={props.inputType}
+          placeholder={props.label}
         />
         <span className="text-danger" style={{fontSize:'0.6rem'}}>{props.validation ? ('Please fill '+ props.label):''}</span>
       </div>
