@@ -1,31 +1,18 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ENV from "../../config/config.json";
-import axios from "axios";
-
+import { actionGet } from "../../reducers/actionCallApi.js";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
-  const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
 
-  async function callUserApi() {
-    const response = await axios.get(ENV.API_ENDPOINT + "user", {
-      headers: {
-        "x-store": localStorage.getItem(ENV.APP_TOKEN)
-      }
-    });
-    return response;
-  }
   useEffect(() => {
-    callUserApi().then(response => {
-      // console.log(response.data.payload);
+    actionGet("user").then(response => {
       setTableData(response.data.payload);
       setResponStatus(true);
     });
-    // console.log(data);
   }, []);
   return (
     <div className="content-wrapper">
@@ -35,11 +22,11 @@ function Dashboard(props) {
             <i className="mdi mdi-account"></i>
           </span>
           User Accounts{""}
-          <a href="/admin/user/create">
+          <Link to="/admin/user-create">
             <button className="btn btn-outline-primary ml-2">
               Create New User
             </button>
-          </a>
+          </Link>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">

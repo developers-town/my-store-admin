@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
-import ENV from "../../config/config.json";
+import {actionPost} from "../../reducers/actionCallApi";
 import FormGroup from "../../components/FormGroup";
 import Loading from "../../assets/images/rolling-loading.svg";
 
@@ -38,8 +36,7 @@ const CreateUser = () => {
     var parseBody = JSON.stringify(data);
     var body = JSON.parse(parseBody);
     window.scrollTo(0, 0);
-    axios
-      .post(ENV.API_ENDPOINT + "user/signup", body)
+    actionPost("user/signup", body)
       .then(response => {
         setIsLoading(false);
         setResponseStatus({
@@ -84,7 +81,7 @@ const CreateUser = () => {
                 className="breadcrumb-item breadcrumb-link"
                 aria-current="page"
               >
-                <Link to="/user"> Users </Link>
+                <Link to="/admin/user"> Users </Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 <span></span> Create User{" "}

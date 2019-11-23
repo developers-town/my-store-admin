@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 
-function Suppiler(props) {
+function Supplier(props) {
   const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
   const [responStatus,setResponStatus] = useState(false)
 
   async function callUserApi() {
-    const response = await axios.get(ENV.API_ENDPOINT + "suppiler", {
+    const response = await axios.get(ENV.API_ENDPOINT + "supplier", {
       headers: {
         "x-store": localStorage.getItem(ENV.APP_TOKEN)
       }
@@ -21,7 +21,7 @@ function Suppiler(props) {
   }
   useEffect(() => {
     callUserApi().then(response => {
-      // console.log(response.data.payload);
+      console.log(response);
       setTableData(response.data.payload);
       setResponStatus(true)
       //   console.log(tableData);
@@ -42,10 +42,10 @@ function Suppiler(props) {
               </FontAwesomeIcon>
             </div>
           </span>
-          Suppiler{""}
-          <a href="/admin/Suppiler/create">
+          Supplier{""}
+          <a href="/admin/Supplier/create">
             <button className="btn btn-outline-primary ml-2">
-              Create Suppiler
+              Create Supplier
             </button>
           </a>
         </h3>
@@ -62,7 +62,7 @@ function Suppiler(props) {
         <div className="col-xl-8 col-lg-7 col-4 grid-margin">
           <div className="card">
             <div className="card-body">
-              <h1 className="card-title">All Suppilers</h1>
+              <h1 className="card-title">All Suppliers</h1>
               <div className="table-responsive">
                 <Table header={["ID", "Name", "Role"]} apiEndpoint="user" responStatus={responStatus}>
                   {tableData.map(data => (
@@ -205,4 +205,4 @@ function Suppiler(props) {
 const mapStateToProps = state => ({
   table: state.table
 });
-export default connect(mapStateToProps)(Suppiler);
+export default connect(mapStateToProps)(Supplier);

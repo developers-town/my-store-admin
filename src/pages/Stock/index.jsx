@@ -20,7 +20,7 @@ function Stock(props) {
   }
   useEffect(() => {
     callUserApi().then(response => {
-      // console.log(response.data.payload);
+      console.log(response.data);
       setTableData(response.data.payload);
       setResponStatus(true)
       //   console.log(tableData);
