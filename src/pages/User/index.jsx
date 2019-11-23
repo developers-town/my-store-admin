@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actionGet } from "../../reducers/actionCallApi.js";
+import { setUser } from "../../actions/user-actions";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
-
   useEffect(() => {
     actionGet("user").then(response => {
       setTableData(response.data.payload);
@@ -50,9 +50,21 @@ function Dashboard(props) {
                 >
                   {tableData.map(data => (
                     <tr key={data._id}>
-                      <td>{data._id}</td>
-                      <td>{data.username}</td>
-                      <td>{data.role}</td>
+                      <td>
+                        <a href="" className="btn">
+                          <h5>{data._id}</h5>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="" className="btn">
+                          <h5>{data.username}</h5>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="" className="btn">
+                          <h5>{data.role}</h5>
+                        </a>
+                      </td>
                     </tr>
                   ))}
                 </Table>
@@ -80,20 +92,28 @@ function Dashboard(props) {
                   }}
                 ></div>
                 <div>
-                  <h3>Alice Eve</h3>
-                  <h5>Project Manager</h5>
+                  <h3>
+                    {props.user
+                      ? props.user.first_name + " " + props.user.last_name
+                      : "No Name"}
+                  </h3>
+                  <h5>{props.user ? props.user.role : "No Role"}</h5>
                 </div>
               </div>
               <div className="pt-3">
                 <div>
                   <hr />
                   <h5>Email</h5>
-                  <p className="pl-1">aliceeve@gmail.com</p>
+                  <p className="pl-1">
+                    {props.user ? props.user.email : "No Email"}
+                  </p>
                 </div>
                 <div>
                   <hr />
                   <h5>Phone Number</h5>
-                  <p className="pl-1">+(855) 012 554 665</p>
+                  <p className="pl-1">
+                    {props.user ? props.user.email : "No Phone"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -185,7 +205,14 @@ function Dashboard(props) {
     </div>
   );
 }
+const mapActionsToProps = {
+  onSetUser: setUser
+};
 const mapStateToProps = state => ({
-  table: state.table
+  table: state.table,
+  user: state.user
 });
-export default connect(mapStateToProps)(Dashboard);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(Dashboard);

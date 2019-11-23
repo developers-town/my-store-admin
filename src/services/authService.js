@@ -1,6 +1,7 @@
 import axios from "axios";
 import ENV from "../config/config.json";
 import jwtDecode from "jwt-decode";
+import jwt from "jsonwebtoken";
 
 export async function login(email, password) {
   try {
@@ -22,9 +23,14 @@ export async function login(email, password) {
 }
 
 export function getCurrentUser() {
-  const jwt = localStorage.getItem(ENV.APP_TOKEN);
+  const token = localStorage.getItem(ENV.APP_TOKEN);
   try {
-    const user = jwtDecode(jwt);
+    const user = jwtDecode(token);
+    jwt.verify(token, "", function(err, decoded) {
+      if (err) {
+        return null;
+      }
+    });
     return user.username;
   } catch (ex) {
     return null;
