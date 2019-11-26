@@ -10,7 +10,8 @@ import {
   User,
   userCreate,
   stockCreate,
-  productCreate
+  productCreate,
+  userDetail
 } from "./pages";
 
 const routes = [
@@ -36,6 +37,12 @@ const routes = [
     path: "/user",
     name: "User",
     component: User,
+    layout: "/admin"
+  },
+  {
+    path: "/user-detail",
+    name: "UserDetail",
+    component: userDetail,
     layout: "/admin"
   },
   {
