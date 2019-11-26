@@ -11,6 +11,7 @@ import Login from './Login'
 import userCreate from './User/createUser.jsx'
 import stockCreate from './Stock/stockCreate.jsx'
 import productCreate from './Product/productCreate.jsx'
+import userDetail from './User/userDetail.jsx'
 
 export  {
     Dashboard,
@@ -25,5 +26,6 @@ export  {
     Login,
     userCreate,
     stockCreate,
-    productCreate
+    productCreate,
+    userDetail
 }
