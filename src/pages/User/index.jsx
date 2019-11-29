@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
+import { actionGet } from "../../reducers/actionCallApi";
 import { connect } from "react-redux";
-import ENV from "../../config/config.json";
-import axios from "axios";
 import { setUser } from "../../actions/user-actions";
 
 import Table from "../../components/Table";
@@ -12,23 +11,15 @@ function Dashboard(props) {
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
 
-  async function callUserApi(endpoint) {
-    const response = await axios.get(ENV.API_ENDPOINT + endpoint, {
-      headers: {
-        "x-store": localStorage.getItem(ENV.APP_TOKEN)
-      }
-    });
-    return response;
-  }
   useEffect(() => {
-    callUserApi("user").then(response => {
+    actionGet("user").then(response => {
       // console.log(response.data.payload);
       setTableData(response.data.payload);
       setResponStatus(true);
     });
-    callUserApi("staff/profile").then(response => {
+    actionGet("staff/profile").then(response => {
       props.onSetUser(response.data.payload);
-    });
+    },[]);
     // console.log(data);
   });
   return (
@@ -39,7 +30,7 @@ function Dashboard(props) {
             <i className="mdi mdi-account"></i>
           </span>
           User Accounts{""}
-          <a href="/admin/user/create">
+          <a href="/admin/user-create">
             <button className="btn btn-outline-primary ml-2">
               Create New User
             </button>
