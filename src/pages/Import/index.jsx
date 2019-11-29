@@ -43,7 +43,7 @@ function Import(props) {
             </div>
           </span>
           Import{""}
-          <a href="/admin/Import/create">
+          <a href="/admin/import-create">
             <button className="btn btn-outline-primary ml-2">
               Create Import
             </button>

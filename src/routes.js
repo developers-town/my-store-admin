@@ -11,7 +11,8 @@ import {
   userCreate,
   stockCreate,
   productCreate,
-  userDetail
+  userDetail,
+  createImport
 } from "./pages";
 
 const routes = [
@@ -91,6 +92,12 @@ const routes = [
     path: "/import",
     name: "Import",
     component: Import,
+    layout: "/admin"
+  },
+  {
+    path: "/import-create",
+    name: "createImport",
+    component: createImport,
     layout: "/admin"
   }
 ];
