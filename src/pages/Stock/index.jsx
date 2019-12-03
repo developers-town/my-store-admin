@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
-import { actionGet } from "../../reducers/actionCallApi";
+import { actionGet } from "../../services/actionCallApi";
 import {Link} from 'react-router-dom'
 
 function Stock(props) {

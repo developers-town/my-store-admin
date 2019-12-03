@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { actionGet } from "../../reducers/actionCallApi";
+import { actionGet } from "../../services/actionCallApi";
 import { connect } from "react-redux";
-import { setUser,currentUser} from "../../actions/user-actions";
+import { currentUser} from "../../actions/user-actions";
 import {useDispatch} from 'react-redux'
 
 import Table from "../../components/Table";
@@ -24,7 +24,7 @@ function Dashboard(props) {
       setResponStatus(true);
     });
     actionGet("staff/profile").then(response => {
-      props.onSetUser(response.data.payload);
+      // props.onSetUser(response.data.payload);
     }, []);
     // console.log(data);
   });
@@ -67,7 +67,7 @@ function Dashboard(props) {
                       key={data._id}
                       onClick={()=>handleCurrentUser(data._id)}
                     >
-                      <Link to="/admin/user-detial">
+                      <Link to="/admin/user-detail">
                         <td>
                           <h5>{data._id}</h5>
                         </td>
@@ -219,7 +219,7 @@ function Dashboard(props) {
   );
 }
 const mapActionsToProps = dispatch => ({
-  onSetUser: setUser,
+  // onSetUser: setUser,
 });
 const mapStateToProps = state => ({
   table: state.table,

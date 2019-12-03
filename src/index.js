@@ -28,9 +28,9 @@ import {
   faCogs
 } from "@fortawesome/free-solid-svg-icons";
 import { Login } from "./pages";
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import allReducers from "./reducers";
+import store from "./store";
+
 library.add(
   faTachometerAlt,
   faHome,
@@ -44,11 +44,6 @@ library.add(
   faCogs
 );
 
-const store = createStore(
-  allReducers,
-  {},
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
 ReactDOM.render(
   <BrowserRouter>
     <Switch>

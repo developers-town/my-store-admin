@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateUser } from "../../actions/user-actions";
+// import { updateUser } from "../../actions/user-actions";
 // import auth from "../../services/authService";
 const Dashboard = props => {
   // const handleClick = () => {
@@ -481,7 +481,7 @@ const mapStateToProps = state => ({
   user: state.user
 });
 const mapActionsToProps = {
-  onUpdateUser: updateUser
+  // onUpdateUser: updateUser
 };
 export default connect(
   mapStateToProps,

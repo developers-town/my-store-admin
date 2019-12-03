@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { actionPost } from "../../reducers/actionCallApi";
-import { actionGet } from "../../reducers/actionCallApi";
+import { actionGet, actionPost } from "../../services/actionCallApi";
 import { FormGroup, Dropdown } from "../../components";
 import Loading from "../../assets/images/rolling-loading.svg";
 
@@ -9,7 +8,7 @@ const ProductCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
-    _categorie: "",
+    _categorie: ""
     // _brand: ""
   });
   const [optionItem, setOptionItem] = useState([
