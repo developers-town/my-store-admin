@@ -1,17 +1,19 @@
-import React,{useState} from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SidebarButton = props => {
-  const [active] = useState(true)
+  const url = window.location.pathname;
   return (
-    <li className="nav-item">
-      <a className="nav-link" href={props.path}>
-      <FontAwesomeIcon className="mr-3" icon={props.icon}> </FontAwesomeIcon>
-        <span className={active ? "menu-title" : "menu"}>
+    <li className="nav-item active">
+      <Link className="nav-link" to={props.path}>
+        <FontAwesomeIcon className="mr-3" icon={props.icon}>
+          {" "}
+        </FontAwesomeIcon>
+        <span className={url === props.path ? "menu-title" : "menu"}>
           {props.sidebarName}
         </span>
-      </a>
+      </Link>
     </li>
   );
 };

@@ -1,4 +1,4 @@
-import { UPDATE_USER, SET_USERNAME } from "../actions/user-actions";
+import { UPDATE_USER, SET_USERNAME,CURRENT_USER } from "../actions/user-actions";
 import auth from "../services/authService";
 
 const userReducer = (state = auth.getCurrentUser(), action) => {

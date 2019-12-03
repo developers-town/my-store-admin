@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { actionPost } from "../../reducers/actionCallApi";
+import { actionPost } from "../../reducers/actionCallApi";
 import FormGroup from "../../components/FormGroup";
 import Loading from "../../assets/images/rolling-loading.svg";
 

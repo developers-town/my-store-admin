@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { actionGet } from "../../reducers/actionCallApi";
 import { connect } from "react-redux";
-import { setUser } from "../../actions/user-actions";
+import { setUser,currentUser} from "../../actions/user-actions";
+import {useDispatch} from 'react-redux'
 
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
-  const a = [1, 2, 3, 4, 5, 6];
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
+  const newDispatch = useDispatch();
+
+  const handleCurrentUser=(id)=>{
+    // console.log(id);
+    newDispatch(currentUser(id))
+  }
 
   useEffect(() => {
     actionGet("user").then(response => {
@@ -19,7 +25,7 @@ function Dashboard(props) {
     });
     actionGet("staff/profile").then(response => {
       props.onSetUser(response.data.payload);
-    },[]);
+    }, []);
     // console.log(data);
   });
   return (
@@ -57,22 +63,21 @@ function Dashboard(props) {
                   responStatus={responStatus}
                 >
                   {tableData.map(data => (
-                    <tr key={data._id}>
-                      <td>
-                        <a href="!" className="btn">
+                    <tr
+                      key={data._id}
+                      onClick={()=>handleCurrentUser(data._id)}
+                    >
+                      <Link to="/admin/user-detial">
+                        <td>
                           <h5>{data._id}</h5>
-                        </a>
-                      </td>
-                      <td>
-                        <a href="!" className="btn">
+                        </td>
+                        <td>
                           <h5>{data.username}</h5>
-                        </a>
-                      </td>
-                      <td>
-                        <a href="!" className="btn">
+                        </td>
+                        <td>
                           <h5>{data.role}</h5>
-                        </a>
-                      </td>
+                        </td>
+                      </Link>
                     </tr>
                   ))}
                 </Table>
@@ -213,9 +218,9 @@ function Dashboard(props) {
     </div>
   );
 }
-const mapActionsToProps = {
-  onSetUser: setUser
-};
+const mapActionsToProps = dispatch => ({
+  onSetUser: setUser,
+});
 const mapStateToProps = state => ({
   table: state.table,
   user: state.user
