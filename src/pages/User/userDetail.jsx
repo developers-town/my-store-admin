@@ -2,11 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 
 const UserDetail = props => {
+console.log(props.user);
+
   return (
     <React.Fragment>
       <div>
         <h1>UserDetail</h1>
-        {props.product}
+        {/* {props.product} */}
       </div>
     </React.Fragment>
   );

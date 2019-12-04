@@ -1,4 +1,4 @@
-import { UPDATE_USER, SET_USERNAME, CURRENT_USER } from "../actions/types";
+import { UPDATE_USER, SET_USERNAME, CURRENT_USER, GET_USER } from "../actions/types";
 
 const initialState = {
   items: [],
@@ -7,12 +7,14 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_USER:
+        return { ...state, items: action.payload };
     case UPDATE_USER:
       return { ...state, items: action.payload };
     case SET_USERNAME:
       return { ...state, items: action.payload };
     case CURRENT_USER:
-      return { ...state, items: action.payload };
+      return { ...state, item: { CURRENT_USER: action.payload } };
     default:
       return state;
   }

@@ -2,20 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { actionGet } from "../../services/actionCallApi";
 import { connect } from "react-redux";
-import { currentUser} from "../../actions/user-actions";
-import {useDispatch} from 'react-redux'
-
+import { currentUser } from "../../actions/user-actions";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
-  const newDispatch = useDispatch();
-
-  const handleCurrentUser=(id)=>{
-    // console.log(id);
-    newDispatch(currentUser(id))
-  }
 
   useEffect(() => {
     actionGet("user").then(response => {
@@ -23,11 +15,11 @@ function Dashboard(props) {
       setTableData(response.data.payload);
       setResponStatus(true);
     });
-    actionGet("staff/profile").then(response => {
-      // props.onSetUser(response.data.payload);
-    }, []);
-    // console.log(data);
-  });
+  }, []);
+  const onCurrentUser = id => {
+    props.onCurrentUser(id);
+    // console.log(id);
+  };
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -63,10 +55,7 @@ function Dashboard(props) {
                   responStatus={responStatus}
                 >
                   {tableData.map(data => (
-                    <tr
-                      key={data._id}
-                      onClick={()=>handleCurrentUser(data._id)}
-                    >
+                    <tr key={data._id} onClick={() => onCurrentUser(data._id)}>
                       <Link to="/admin/user-detail">
                         <td>
                           <h5>{data._id}</h5>
@@ -218,11 +207,10 @@ function Dashboard(props) {
     </div>
   );
 }
-const mapActionsToProps = dispatch => ({
-  // onSetUser: setUser,
+const mapDispatchToProps = dispatch => ({
+  onCurrentUser: id => dispatch(currentUser(id))
 });
 const mapStateToProps = state => ({
-  table: state.table,
   user: state.user
 });
-export default connect(mapStateToProps, mapActionsToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
