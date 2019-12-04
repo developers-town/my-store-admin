@@ -1,39 +1,24 @@
+import {CURRENT_USER, GET_USER,UPDATE_USER } from "./types";
 import auth from "../services/authService";
 
-export const UPDATE_USER = "user:onUpdateUser";
-export const GET_USER = "user:onGetUser";
-export const SET_USERNAME = "user:onSetUsername";
-export const CURRENT_USER = "user:onCurrentUser"
-
-export const updateUser = newUser => {
-  return {
-    type: UPDATE_USER,
-    payload: {
-      user: newUser
-    }
-  };
-};
-
-export const getUser = () => {
-  return {
+export const getUser = () => dispatch => {
+  dispatch({
     type: GET_USER,
     payload: {
       user: auth.currentUser()
     }
-  };
+  });
 };
-export const setUser = newUsername => {
-  return {
-    type: SET_USERNAME,
-    payload: {
-      username: newUsername
-    }
-  };
-};
-export const currentUser = id => {
-  console.log(id);
-  return {
+
+export const currentUser = id => dispatch => {
+  dispatch({
     type: CURRENT_USER,
     payload: id
-  };
+  });
+};
+export const updateUser  = user => dispatch => {
+  dispatch({
+    type: UPDATE_USER,
+    payload: user
+  });
 };

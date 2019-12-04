@@ -49,9 +49,10 @@ function Login(props) {
                 <div style={{ height: "80vh" }}></div>
               </div>
               <div style={{}} className="col-lg-6">
-                <div style={{ paddingTop: "15vh" }} className="text-center">
-                  <h1>{props.user}</h1>
-                </div>
+                <div
+                  style={{ paddingTop: "15vh" }}
+                  className="text-center"
+                ></div>
                 <div className="text-center pt-4">
                   <p style={{ color: "#888888", fontSize: "2vh" }}>
                     Welcome Back To RumLow
@@ -125,10 +126,7 @@ function Login(props) {
 const mapStateToProps = state => ({
   user: state.user
 });
-const mapActionsToProps = {
+const mapActionsToProps = dispatch => ({
   onUpdateUser: updateUser
-};
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(Login);
+});
+export default connect(mapStateToProps, mapActionsToProps)(Login);

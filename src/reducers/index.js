@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import userReducer from "./userReducer";
-import tableReducer from "./tableReducer";
+import productReducer from './productReducer'
 
-const allReducers = combineReducers({
+const rootReducer = combineReducers({
   user: userReducer,
-  table: tableReducer
+  product: productReducer
 });
 
-export default allReducers;
+export default rootReducer;

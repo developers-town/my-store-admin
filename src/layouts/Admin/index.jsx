@@ -4,7 +4,7 @@ import { Navbar, Sidebar } from "../../layouts";
 import { Route, Switch } from "react-router-dom";
 import routes from "../../routes.js";
 import Footer from "../Footer";
-import actionCallApi from "../../reducers/actionCallApi.js";
+import actionCallApi from "../../services/actionCallApi.js";
 
 function Admin(props) {
   function getRoutes(routes) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setUser } from "../actions/user-actions";
+// import { setUser } from "../actions/user-actions";
 const Dropdown = props => {
   return (
     <React.Fragment>
@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
   user: state.user
 });
 const mapActionsToProps = {
-  onSetUsername: setUser
+  // onSetUsername: setUser
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Dropdown);
