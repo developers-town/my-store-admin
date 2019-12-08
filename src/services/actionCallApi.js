@@ -1,7 +1,7 @@
 import axios from "axios";
 import ENV from "../config/config.json";
 
-async function actionCallApi() {
+export async function actionCallApi() {
   const response = await axios.get(ENV.API_ENDPOINT + "staff/profile", {
     headers: {
       "x-store": localStorage.getItem(ENV.APP_TOKEN)

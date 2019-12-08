@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import auth from "../../services/authService";
 import { connect } from "react-redux";
-import { updateUser } from "../../actions/user-actions";
+import { currentUser } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
 import Loading from "../../assets/images/rolling-loading.svg";
+import { useHistory } from "react-router-dom";
+import {actionCallApi} from '../../services/actionCallApi'
 // import login2 from "../../assets/images/login/login2.jpg";
 
 function Login(props) {
@@ -11,13 +13,17 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [loginFail, setLoginFail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  let history = useHistory();
   const authLogin = async e => {
     e.preventDefault();
     setIsLoading(true);
     try {
       await auth.login(email, password);
       setLoginFail(false);
-      window.location = "admin/dashboard";
+      history.push("admin/dashboard");
+      actionCallApi().then(res=>{
+        props.onCurrentUser(res.data.payload)
+      });
     } catch (ex) {
       setLoginFail(true);
       setIsLoading(false);
@@ -126,7 +132,7 @@ function Login(props) {
 const mapStateToProps = state => ({
   user: state.user
 });
-const mapActionsToProps = dispatch => ({
-  onUpdateUser: updateUser
+const mapDispatchToProps = dispatch => ({
+  onCurrentUser: user => dispatch(currentUser(user))
 });
-export default connect(mapStateToProps, mapActionsToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

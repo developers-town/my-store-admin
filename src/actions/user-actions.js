@@ -1,4 +1,4 @@
-import {CURRENT_USER, GET_USER,UPDATE_USER } from "./types";
+import { CURRENT_USER, GET_USER, UPDATE_USER, SELECTED_USER } from "./types";
 import auth from "../services/authService";
 
 export const getUser = () => dispatch => {
@@ -10,13 +10,19 @@ export const getUser = () => dispatch => {
   });
 };
 
-export const currentUser = id => dispatch => {
+export const currentUser = user => dispatch => {
   dispatch({
     type: CURRENT_USER,
-    payload: id
+    payload: user
   });
 };
-export const updateUser  = user => dispatch => {
+export const selectedUser = selected_user => dispatch => {
+  dispatch({
+    type: SELECTED_USER,
+    payload: selected_user
+  });
+};
+export const updateUser = user => dispatch => {
   dispatch({
     type: UPDATE_USER,
     payload: user
