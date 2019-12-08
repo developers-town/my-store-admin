@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import auth from "../../services/authService";
 const Dashboard = props => {
   // const handleClick = () => {
-  //   console.log(auth.getCurrentUser());
+    console.log(props.user);
   //   props.onUpdateUser(auth.getCurrentUser());
   // };
   return (

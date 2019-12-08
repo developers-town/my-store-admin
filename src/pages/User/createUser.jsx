@@ -90,7 +90,7 @@ const CreateUser = () => {
           </nav>
         </div>
         <div className="row">
-          <div className="card col-6">
+          <div className="card col-lg-8 col-sm">
             <div className="card-body">
               <div>
                 <h3>New User Information</h3>

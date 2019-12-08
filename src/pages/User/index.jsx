@@ -2,23 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { actionGet } from "../../services/actionCallApi";
 import { connect } from "react-redux";
-import { currentUser } from "../../actions/user-actions";
+import { selectedUser } from "../../actions/user-actions";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
 function Dashboard(props) {
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
+  const currentUser = props.user.CURRENT_USER || {
+    email:"No Eamil",
+    username:"No Name",
+    role:"No Role",
+    phone:"No Phone",
+  };
 
   useEffect(() => {
     actionGet("user").then(response => {
-      // console.log(response.data.payload);
       setTableData(response.data.payload);
       setResponStatus(true);
     });
   }, []);
-  const onCurrentUser = id => {
-    props.onCurrentUser(id);
-    // console.log(id);
+  const onSelectedUser = id => {
+    actionGet("user/" + id).then(res => {
+      props.onSelectedUser(res.data.payload);
+    });
   };
   return (
     <div className="content-wrapper">
@@ -28,11 +34,11 @@ function Dashboard(props) {
             <i className="mdi mdi-account"></i>
           </span>
           User Accounts{""}
-          <a href="/admin/user-create">
+          <Link to="/admin/user-create">
             <button className="btn btn-outline-primary ml-2">
               Create New User
             </button>
-          </a>
+          </Link>
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">
@@ -55,17 +61,14 @@ function Dashboard(props) {
                   responStatus={responStatus}
                 >
                   {tableData.map(data => (
-                    <tr key={data._id} onClick={() => onCurrentUser(data._id)}>
-                      <Link to="/admin/user-detail">
-                        <td>
-                          <h5>{data._id}</h5>
-                        </td>
-                        <td>
-                          <h5>{data.username}</h5>
-                        </td>
-                        <td>
-                          <h5>{data.role}</h5>
-                        </td>
+                    <tr key={data._id} onClick={() => onSelectedUser(data._id)}>
+                      <Link
+                        className="nav-link"
+                        to={"/admin/user-detail/" + data._id}
+                      >
+                        <td>{data._id}</td>
+                        <td>{data.username}</td>
+                        <td>{data.role}</td>
                       </Link>
                     </tr>
                   ))}
@@ -94,28 +97,20 @@ function Dashboard(props) {
                   }}
                 ></div>
                 <div>
-                  <h3>
-                    {props.user
-                      ? props.user.first_name + " " + props.user.last_name
-                      : "No Name"}
-                  </h3>
-                  <h5>{props.user ? props.user.role : "No Role"}</h5>
+                  <h3>{currentUser.username}</h3>
+                  <h5>{currentUser.role}</h5>
                 </div>
               </div>
               <div className="pt-3">
                 <div>
                   <hr />
                   <h5>Email</h5>
-                  <p className="pl-1">
-                    {props.user ? props.user.email : "No Email"}
-                  </p>
+                  <p className="pl-1">{currentUser.email}</p>
                 </div>
                 <div>
                   <hr />
                   <h5>Phone Number</h5>
-                  <p className="pl-1">
-                    {props.user ? props.user.email : "No Phone"}
-                  </p>
+                  <p className="pl-1">{currentUser.phone}</p>
                 </div>
               </div>
             </div>
@@ -208,7 +203,7 @@ function Dashboard(props) {
   );
 }
 const mapDispatchToProps = dispatch => ({
-  onCurrentUser: id => dispatch(currentUser(id))
+  onSelectedUser: id => dispatch(selectedUser(id))
 });
 const mapStateToProps = state => ({
   user: state.user

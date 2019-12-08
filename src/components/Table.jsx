@@ -1,16 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setTable } from "../actions/table-actions";
-import rolling_loading from "../assets/images/rolling-loading.svg";
-
-const formLoading = (
-  <img
-    className="img-fluid"
-    style={{ width: "50px" }}
-    src={rolling_loading}
-    alt="Loading"
-  />
-);
+import {Loading} from "../components";
 
 const Table = props => {
   return (
@@ -23,7 +14,7 @@ const Table = props => {
             ))}
           </tr>
         </thead>
-        <tbody>{props.responStatus ? props.children : formLoading}</tbody>
+        <tbody>{props.responStatus ? props.children : Loading}</tbody>
       </table>
     </React.Fragment>
   );

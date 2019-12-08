@@ -41,7 +41,7 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: "/user-detail",
+    path: "/user-detail/:id",
     name: "UserDetail",
     component: userDetail,
     layout: "/admin"
