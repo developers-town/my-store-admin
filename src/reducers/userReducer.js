@@ -3,12 +3,15 @@ import {
   SET_USERNAME,
   CURRENT_USER,
   GET_USER,
-  SELECTED_USER
+  SELECTED_USER,
+  SET_LOADING,
+  UPDATE_SELECTED_USER
 } from "../actions/types";
 
 const initialState = {
   items: [],
-  item: {}
+  item: {},
+  loading: true
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,7 +25,11 @@ const userReducer = (state = initialState, action) => {
     case CURRENT_USER:
       return { ...state, CURRENT_USER: action.payload };
     case SELECTED_USER:
-      return { ...state, SELECTED_USER: action.payload };
+      return { ...state, item: action.payload, loading: false };
+    case SET_LOADING:
+      return { ...state, loading: action.payload };
+    case UPDATE_SELECTED_USER:
+      return { ...state, item: action.payload, loading: false };
     default:
       return state;
   }

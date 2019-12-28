@@ -10,14 +10,12 @@ function Admin(props) {
   function getRoutes(routes) {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        actionCallApi()
-          .then(response => {})
-          .catch(err => {
-            if (err.response.status) {
-              window.localStorage.removeItem("userToken");
-              window.location.href = "/";
-            }
-          });
+        actionCallApi().catch(err => {
+          if (err.response.status) {
+            window.localStorage.removeItem("userToken");
+            window.location.href = "/";
+          }
+        });
         return (
           <Route
             path={prop.layout + prop.path}
@@ -40,9 +38,9 @@ function Admin(props) {
         <Sidebar></Sidebar>
         <div className="main-panel">
           <Switch>{getRoutes(routes)}</Switch>
-          <Footer></Footer>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
