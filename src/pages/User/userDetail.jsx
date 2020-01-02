@@ -39,7 +39,7 @@ const UserDetail = () => {
   
   return (
     <React.Fragment>
-      <div className="card shadow-lg vh-100">
+      <div className="card vh-100">
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">

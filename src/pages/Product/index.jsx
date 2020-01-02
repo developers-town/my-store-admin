@@ -28,6 +28,8 @@ function Product(props) {
     });
     // console.log(data);
   },[]);
+  console.log(props.product);
+  
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -66,11 +68,13 @@ function Product(props) {
               <div className="table-responsive">
                 <Table header={["ID", "Name", "Date"]} apiEndpoint="user" responStatus={responStatus}>
                   {tableData.map(data => (
+                   <Link to={"product-detail/"+ data._id}>
                     <tr key={data._id}>
                       <td>{data._id}</td>
                       <td>{data.name}</td>
                       <td>{data.create_date}</td>
                     </tr>
+                   </Link>
                   ))}
                 </Table>
               </div>
@@ -203,6 +207,6 @@ function Product(props) {
   );
 }
 const mapStateToProps = state => ({
-  table: state.table
+  product: state
 });
 export default connect(mapStateToProps)(Product);
