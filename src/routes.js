@@ -12,7 +12,8 @@ import {
   stockCreate,
   productCreate,
   userDetail,
-  createImport
+  createImport,
+  productDetail
 } from "./pages";
 
 const routes = [
@@ -80,6 +81,12 @@ const routes = [
     path: "/product",
     name: "Product",
     component: Product,
+    layout: "/admin"
+  },
+  {
+    path: "/product-detail/:id",
+    name: "ProductDetail",
+    component: productDetail,
     layout: "/admin"
   },
   {

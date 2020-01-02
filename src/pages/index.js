@@ -13,6 +13,8 @@ import stockCreate from './Stock/stockCreate.jsx'
 import productCreate from './Product/productCreate.jsx'
 import userDetail from './User/userDetail.jsx'
 import createImport from './Import/createImport.jsx'
+import productDetail from './Product/productDetail'
+
 
 export  {
     Dashboard,
@@ -29,5 +31,6 @@ export  {
     stockCreate,
     productCreate,
     userDetail,
-    createImport
+    createImport,
+    productDetail
 }

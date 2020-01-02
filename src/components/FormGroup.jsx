@@ -11,10 +11,13 @@ const FormGroup = props => {
         <input
           onChange={props.onInputChange}
           className="form-control"
+          value={props.value || ""}
           type={props.inputType}
           placeholder={props.placeholder}
         />
-        <span className="text-danger" style={{fontSize:'0.6rem'}}>{props.validation ? ('Please fill '+ props.label):''}</span>
+        <span className="text-danger" style={{ fontSize: "0.6rem" }}>
+          {props.validation ? "Please fill " + props.label : ""}
+        </span>
       </div>
     </React.Fragment>
   );
@@ -27,7 +30,4 @@ const mapActionsToProps = {
   // onSetUsername: setUser
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(FormGroup);
+export default connect(mapStateToProps, mapActionsToProps)(FormGroup);

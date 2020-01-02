@@ -1,29 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { LabelInfo, Loading } from "../../components";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { LabelInfo, Loading, Modal, FormGroup } from "../../components";
+import { selectedUser, updateSlectedUser } from "../../actions/user-actions";
+import { useDispatch, useSelector } from "react-redux";
+// import { useHistory } from "react-router-dom";
 
-const UserDetail = props => {
-  const user = props.user.SELECTED_USER || { undefind: true };
-  const [isExpired, setIsExpired] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+const UserDetail = () => {
+  const { id } = useParams();
+  const user = useSelector(state => state.user.item);
+  const loading = useSelector(state => state.user.loading);
+  const dispatch = useDispatch();
+  // const history = useHistory();
+  const [data, setData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: "",
+    role: ""
+  });
+
   useEffect(() => {
-    if (user.undefind) {
-      setIsExpired(true);
-      handleLoading();
-    } else {
-      setIsExpired(false);
-      handleLoading();
+    dispatch(selectedUser(id));
+  }, [dispatch, id]);
+
+  // assign data to value
+  const modelClick = () => {
+    if (!loading) {
+      setData(user);
     }
-  }, [user]);
-  const handleLoading = () => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
   };
+
+  const onSaveChange = () => {
+    dispatch(updateSlectedUser(id, data));
+  };
+
+  console.log(data);
+  
   return (
     <React.Fragment>
-      <div className="card shadow-lg">
+      <div className="card vh-100">
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
@@ -45,25 +61,10 @@ const UserDetail = props => {
             </ul>
           </nav>
         </div>
-        {isLoading ? (
+        {loading ? (
           Loading
         ) : (
           <>
-            {isExpired ? (
-              <div className="px-3">
-                <div className="card shadow-lg bg-danger">
-                  <div className="card-body p-3">
-                    <p className="p-0 m-0">
-                      Information user have expired. Please go to{" "}
-                      <Link to="/admin/user">User</Link> than select again{" "}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
             <div className="row justify-content-center">
               <div className="col-sm-4 p-3 text-center">
                 <img
@@ -74,15 +75,115 @@ const UserDetail = props => {
                 />
                 <p className="text-small pointer mt-2">change profile</p>
               </div>
-              <div className="col-sm-8">
-                <LabelInfo label="username" text={user.username} />
-                <LabelInfo label="id" text={user._id} />
-                <LabelInfo label="first name" text={user.first_name} />
-                <LabelInfo label="last name" text={user.last_name} />
-                <LabelInfo label="email" text={user.email} />
-                <LabelInfo label="create date" text={user.create_date} />
-                <LabelInfo label="role" text={user.role} />
-              </div>
+              {user && (
+                <div className="col-sm-8">
+                  <LabelInfo label="id" text={user._id} />
+                  <LabelInfo label="username" text={user.username} />
+                  <LabelInfo label="first name" text={user.first_name} />
+                  <LabelInfo label="last name" text={user.last_name} />
+                  <LabelInfo label="email" text={user.email} />
+                  <LabelInfo label="create date" text={user.create_date} />
+                  <LabelInfo label="role" text={user.role} />
+                  <button
+                    className="btn btn-danger"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    onClick={() => modelClick()}
+                  >
+                    Edit
+                  </button>
+                  <Modal
+                    title="Edit User Info"
+                    buttonTitle="Save Change"
+                    saveChange={e => onSaveChange()}
+                  >
+                    <form action="">
+                      <div className="d-flex">
+                        <div className="col-4 overflow-hidden my-3">
+                          <img
+                            className="img-fluid"
+                            src="https://lakewangaryschool.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div className="align-self-end pb-2">
+                          <label
+                            className="btn btn-outline-primary"
+                            htmlFor="user-choose-image"
+                          >
+                            Choose Image
+                          </label>
+                          <input
+                            type="file"
+                            id="user-choose-image"
+                            className="d-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="d-flex">
+                        <div className="flex-grow-1 pr-2">
+                          <FormGroup
+                            onInputChange={e =>
+                              setData({ ...data, first_name: e.target.value })
+                            }
+                            label="First Name"
+                            value={data.first_name}
+                            validation={data.first_name.length < 3}
+                          ></FormGroup>
+                        </div>
+                        <div className="flex-grow-1 pl-2">
+                          <FormGroup
+                            onInputChange={e =>
+                              setData({ ...data, last_name: e.target.value })
+                            }
+                            validation={data.last_name.length < 3}
+                            value={data.last_name}
+                            label="Last Name"
+                          ></FormGroup>
+                        </div>
+                      </div>
+                      <div className="d-flex">
+                        <div className="flex-grow-1 pr-2">
+                          <FormGroup
+                            validation={data.username.length < 3}
+                            label="Username"
+                            value={data.username}
+                            onInputChange={e =>
+                              setData({ ...data, username: e.target.value })
+                            }
+                          ></FormGroup>
+                        </div>
+                        <div className="flex-grow-1 pl-2">
+                          <FormGroup
+                            onInputChange={e =>
+                              setData({ ...data, email: e.target.value })
+                            }
+                            validation={
+                              !data.email.match(
+                                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                              )
+                            }
+                            label="Email"
+                            value={data.email}
+                            inputType="email"
+                          ></FormGroup>
+                        </div>
+                      </div>
+                      <FormGroup
+                        onInputChange={e =>
+                          setData({ ...data, password: e.target.value })
+                        }
+                        // validation={data.password.length < 4}
+                        label="Password"
+                        placeholder="****************"
+                        inputType="password"
+                      ></FormGroup>
+                    </form>
+                  </Modal>
+                    
+                </div>
+              )}
             </div>
           </>
         )}
@@ -90,8 +191,4 @@ const UserDetail = props => {
     </React.Fragment>
   );
 };
-const mapStateToProps = state => ({
-  product: state.product,
-  user: state.user
-});
-export default connect(mapStateToProps)(UserDetail);
+export default UserDetail;

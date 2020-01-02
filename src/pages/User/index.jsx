@@ -9,10 +9,10 @@ function Dashboard(props) {
   const [tableData, setTableData] = useState([]);
   const [responStatus, setResponStatus] = useState(false);
   const currentUser = props.user.CURRENT_USER || {
-    email:"No Eamil",
-    username:"No Name",
-    role:"No Role",
-    phone:"No Phone",
+    email: "No Eamil",
+    username: "No Name",
+    role: "No Role",
+    phone: "No Phone"
   };
 
   useEffect(() => {
@@ -21,11 +21,6 @@ function Dashboard(props) {
       setResponStatus(true);
     });
   }, []);
-  const onSelectedUser = id => {
-    actionGet("user/" + id).then(res => {
-      props.onSelectedUser(res.data.payload);
-    });
-  };
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -61,7 +56,7 @@ function Dashboard(props) {
                   responStatus={responStatus}
                 >
                   {tableData.map(data => (
-                    <tr key={data._id} onClick={() => onSelectedUser(data._id)}>
+                    <tr key={data._id}>
                       <Link
                         className="nav-link"
                         to={"/admin/user-detail/" + data._id}
