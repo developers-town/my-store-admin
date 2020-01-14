@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LabelInfo, Loading, Modal, FormGroup } from "../../components";
-import { selectedUser, updateSlectedUser } from "../../actions/user-actions";
+import { selectedUser, updateSlectedUser, enableLoading } from "../../actions/user-actions";
 import { useDispatch, useSelector } from "react-redux";
 // import { useHistory } from "react-router-dom";
 
@@ -21,6 +21,7 @@ const UserDetail = () => {
   });
 
   useEffect(() => {
+    dispatch(enableLoading())
     dispatch(selectedUser(id));
   }, [dispatch, id]);
 
@@ -35,7 +36,7 @@ const UserDetail = () => {
     dispatch(updateSlectedUser(id, data));
   };
 
-  console.log(data);
+  // console.log(data);
   
   return (
     <React.Fragment>
