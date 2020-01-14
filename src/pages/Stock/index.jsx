@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
-import { actionGet } from "../../services/actionCallApi";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Loading } from "../../components";
+import { getStock, productEnableLoading } from "../../actions/product-action";
 
 function Stock(props) {
-  const [tableData, setTableData] = useState([]);
-  const [responStatus, setResponStatus] = useState(false);
+  const tableData = useSelector(state => state.product.stocks);
+  const loading = useSelector(state => state.product.loading);
+  const currentUser = useSelector(state => state.user.CURRENT_USER);
+  const dispatch = useDispatch();
   useEffect(() => {
-    actionGet("stock").then(response => {
-      // console.log(response.data);
-      setTableData(response.data.payload);
-      setResponStatus(true);
-    });
-  }, []);
+    dispatch(productEnableLoading());
+    dispatch(getStock());
+  }, [dispatch]);
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -31,7 +31,7 @@ function Stock(props) {
             </div>
           </span>
           Stock{""}
-          <Link to='/admin/stock-create'>
+          <Link to="/admin/stock-create">
             <button className="btn btn-outline-primary ml-2">
               Create Stock
             </button>
@@ -52,60 +52,63 @@ function Stock(props) {
             <div className="card-body">
               <h1 className="card-title">All Stocks</h1>
               <div className="table-responsive">
-                <Table
-                  header={["ID", "Quantity", "Date"]}
-                  apiEndpoint="user"
-                  responStatus={responStatus}
-                >
-                  {tableData.map(data => (
-                    <tr key={data._id}>
-                      <td>{data._id}</td>
-                      <td>{data.quantity}</td>
-                      <td>{data.create_date}</td>
-                    </tr>
-                  ))}
-                </Table>
+                {loading ? (
+                  Loading
+                ) : (
+                  <Table header={["ID", "Quantity", "Date"]} apiEndpoint="user">
+                    {tableData &&
+                      tableData.map(data => (
+                        <tr key={data._id}>
+                          <td>{data._id}</td>
+                          <td>{data.quantity}</td>
+                          <td>{data.create_date}</td>
+                        </tr>
+                      ))}
+                  </Table>
+                )}
               </div>
             </div>
           </div>
         </div>
         <div className="col-xl-4 col-lg-5 col-5 grid-margin">
           <div className="card">
-            <div className="card-body">
-              <div className="d-flex flex-row">
-                <div
-                  style={{
-                    backgroundImage: `url(${face18Jpg})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    margin: "0",
-                    padding: "0",
-                    height: "5rem",
-                    width: "5rem",
-                    content: "",
-                    borderRadius: "50%",
-                    marginRight: "2rem"
-                  }}
-                ></div>
-                <div>
-                  <h3>Alice Eve</h3>
-                  <h5>Project Manager</h5>
+            {currentUser && (
+              <div className="card-body">
+                <div className="d-flex flex-row">
+                  <div
+                    style={{
+                      backgroundImage: `url(${face18Jpg})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                      margin: "0",
+                      padding: "0",
+                      height: "5rem",
+                      width: "5rem",
+                      content: "",
+                      borderRadius: "50%",
+                      marginRight: "2rem"
+                    }}
+                  ></div>
+                  <div>
+                    <h3>{currentUser.username}</h3>
+                    <h5>{currentUser.role}</h5>
+                  </div>
+                </div>
+                <div className="pt-3">
+                  <div>
+                    <hr />
+                    <h5>Email</h5>
+                    <p className="pl-1">{currentUser.email}</p>
+                  </div>
+                  <div>
+                    <hr />
+                    <h5>Phone Number</h5>
+                    <p className="pl-1">{currentUser.phone}</p>
+                  </div>
                 </div>
               </div>
-              <div className="pt-3">
-                <div>
-                  <hr />
-                  <h5>Email</h5>
-                  <p className="pl-1">aliceeve@gmail.com</p>
-                </div>
-                <div>
-                  <hr />
-                  <h5>Phone Number</h5>
-                  <p className="pl-1">+(855) 012 554 665</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setTable } from "../actions/table-actions";
-import {Loading} from "../components";
 
 const Table = props => {
   return (
@@ -14,7 +13,7 @@ const Table = props => {
             ))}
           </tr>
         </thead>
-        <tbody>{props.responStatus ? props.children : Loading}</tbody>
+        <tbody>{props.children}</tbody>
       </table>
     </React.Fragment>
   );

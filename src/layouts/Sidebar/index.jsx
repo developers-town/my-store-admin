@@ -7,8 +7,10 @@ import SidebarButton from "./SidebarButton";
 import "../../assets/css/style.css";
 
 import face1Jpg from "../../assets/images/faces/face2.jpg";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
+  const currentUser = useSelector(state => state.user.CURRENT_USER);
   const [sidebar] = useState([
     {
       name: "Dashboard",
@@ -66,10 +68,16 @@ function Sidebar() {
               <img src={face1Jpg} alt="profile" />
               <span className="login-status online"></span>
             </div>
-            <div className="nav-profile-text d-flex flex-column">
-              <span className="font-weight-bold mb-2">David Grey. H</span>
-              <span className="text-secondary text-small">Project Manager</span>
-            </div>
+            {currentUser && (
+              <div className="nav-profile-text d-flex flex-column">
+                <span className="font-weight-bold mb-2">
+                  {currentUser.username}
+                </span>
+                <span className="text-secondary text-small">
+                  {currentUser.role}
+                </span>
+              </div>
+            )}
             <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
           </a>
         </li>

@@ -15,13 +15,16 @@ axios.interceptors.request.use(
   }
 );
 
-export async function actionCallApi() {
-  const response = await axios.get(ENV.API_ENDPOINT + "staff/profile");
-  return response;
-}
 export async function actionGet(model) {
-  const response = await axios.get(ENV.API_ENDPOINT + model);
-  return response;
+  try {
+    const response = await axios.get(ENV.API_ENDPOINT + model);
+    return response;
+  } catch (error) {
+    if (error) {
+      window.localStorage.removeItem("userToken");
+      window.location.href = "/";
+    }
+  }
 }
 export async function actionPost(model, body) {
   const response = await axios.post(ENV.API_ENDPOINT + model, body);
@@ -31,5 +34,3 @@ export async function actionPut(model, body) {
   const response = await axios.put(ENV.API_ENDPOINT + model, body);
   return response;
 }
-
-export default actionCallApi;

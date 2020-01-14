@@ -1,34 +1,28 @@
-import React, { useState } from "react";
-import auth from "../../services/authService";
-import { connect } from "react-redux";
-import { currentUser } from "../../actions/user-actions";
+import React, { useState, useEffect } from "react";
+import { loginUser, enableLoading } from "../../actions/user-actions";
 import login1 from "../../assets/images/login/login1.jpg";
 import Loading from "../../assets/images/rolling-loading.svg";
 import { useHistory } from "react-router-dom";
-import {actionCallApi} from '../../services/actionCallApi'
-// import login2 from "../../assets/images/login/login2.jpg";
+import { useDispatch, useSelector } from "react-redux";
 
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginFail, setLoginFail] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  let history = useHistory();
+  const loginFail = useSelector(state => state.user.login_error);
+  const isLoading = useSelector(state => state.user.loading);
+  const logged = useSelector(state => state.user.logged);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const authLogin = async e => {
     e.preventDefault();
-    setIsLoading(true);
-    try {
-      await auth.login(email, password);
-      setLoginFail(false);
-      history.push("admin/dashboard");
-      actionCallApi().then(res=>{
-        props.onCurrentUser(res.data.payload)
-      });
-    } catch (ex) {
-      setLoginFail(true);
-      setIsLoading(false);
-    }
+    dispatch(enableLoading());
+    dispatch(loginUser({ email, password }));
   };
+
+  useEffect(() => {
+    if (logged) history.push("admin/dashboard");
+  }, [logged, history]);
   return (
     <div>
       <div
@@ -129,10 +123,4 @@ function Login(props) {
     </div>
   );
 }
-const mapStateToProps = state => ({
-  user: state.user
-});
-const mapDispatchToProps = dispatch => ({
-  onCurrentUser: user => dispatch(currentUser(user))
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { actionGet } from "../../services/actionCallApi";
-import { connect } from "react-redux";
-import { selectedUser } from "../../actions/user-actions";
+import { connect, useSelector, useDispatch } from "react-redux";
+import {
+  selectedUser,
+  getUser,
+  enableLoading
+} from "../../actions/user-actions";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
-function Dashboard(props) {
-  const [tableData, setTableData] = useState([]);
-  const [responStatus, setResponStatus] = useState(false);
-  const currentUser = props.user.CURRENT_USER || {
-    email: "No Eamil",
-    username: "No Name",
-    role: "No Role",
-    phone: "No Phone"
-  };
+import { Loading } from "../../components";
+
+function Dashboard() {
+  const tableData = useSelector(state => state.user.USERS);
+  const responStatus = useSelector(state => state.user.loading);
+  const currentUser = useSelector(state => state.user.CURRENT_USER);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    actionGet("user").then(response => {
-      setTableData(response.data.payload);
-      setResponStatus(true);
-    });
-  }, []);
+    dispatch(enableLoading());
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -50,65 +50,77 @@ function Dashboard(props) {
             <div className="card-body">
               <h1 className="card-title">All Users</h1>
               <div className="table-responsive">
-                <Table
-                  header={["ID", "Name", "Role"]}
-                  apiEndpoint="user"
-                  responStatus={responStatus}
-                >
-                  {tableData.map(data => (
-                    <tr key={data._id}>
-                      <Link
-                        className="nav-link"
-                        to={"/admin/user-detail/" + data._id}
-                      >
-                        <td>{data._id}</td>
-                        <td>{data.username}</td>
-                        <td>{data.role}</td>
-                      </Link>
-                    </tr>
-                  ))}
-                </Table>
+                {responStatus ? (
+                  Loading
+                ) : (
+                  <>
+                    <Table
+                      header={["ID", "Name", "Role"]}
+                      apiEndpoint="user"
+                      responStatus={responStatus}
+                    >
+                      {tableData && (
+                        <>
+                          {tableData.map(data => (
+                            <Link
+                              className="nav-link"
+                              to={"/admin/user-detail/" + data._id}
+                            >
+                              <tr key={data._id}>
+                                <td>{data._id}</td>
+                                <td>{data.username}</td>
+                                <td>{data.role}</td>
+                              </tr>
+                            </Link>
+                          ))}
+                        </>
+                      )}
+                    </Table>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
         <div className="col-xl-4 col-lg-5 col-5 grid-margin">
           <div className="card">
-            <div className="card-body">
-              <div className="d-flex flex-row">
-                <div
-                  style={{
-                    backgroundImage: `url(${face18Jpg})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    margin: "0",
-                    padding: "0",
-                    height: "5rem",
-                    width: "5rem",
-                    content: "",
-                    borderRadius: "50%",
-                    marginRight: "2rem"
-                  }}
-                ></div>
-                <div>
-                  <h3>{currentUser.username}</h3>
-                  <h5>{currentUser.role}</h5>
+            {currentUser && (
+              <div className="card-body">
+                <div className="d-flex flex-row">
+                  <div
+                    style={{
+                      backgroundImage: `url(${face18Jpg})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                      margin: "0",
+                      padding: "0",
+                      height: "5rem",
+                      width: "5rem",
+                      content: "",
+                      borderRadius: "50%",
+                      marginRight: "2rem"
+                    }}
+                  ></div>
+                  <div>
+                    <h3>{currentUser.username}</h3>
+                    <h5>{currentUser.role}</h5>
+                  </div>
+                </div>
+                <div className="pt-3">
+                  <div>
+                    <hr />
+                    <h5>Email</h5>
+                    <p className="pl-1">{currentUser.email}</p>
+                  </div>
+                  <div>
+                    <hr />
+                    <h5>Phone Number</h5>
+                    <p className="pl-1">{currentUser.phone}</p>
+                  </div>
                 </div>
               </div>
-              <div className="pt-3">
-                <div>
-                  <hr />
-                  <h5>Email</h5>
-                  <p className="pl-1">{currentUser.email}</p>
-                </div>
-                <div>
-                  <hr />
-                  <h5>Phone Number</h5>
-                  <p className="pl-1">{currentUser.phone}</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
