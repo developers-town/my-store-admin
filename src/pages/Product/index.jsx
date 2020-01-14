@@ -1,41 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import ENV from "../../config/config.json";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { get_products, productEnableLoading } from "../../actions/product-action.js";
+import { Loading } from "../../components/index.js";
 
-function Product(props) {
-  const [tableData, setTableData] = useState([]);
-  const [responStatus,setResponStatus] = useState(false)
+function Product() {
+  const tableData = useSelector(state => state.product.items);
+  const responStatus = useSelector(state => state.product.loading);
+  const currentUser = useSelector(state => state.user.CURRENT_USER);
+  const dispatch = useDispatch();
 
-  async function callUserApi() {
-    const response = await axios.get(ENV.API_ENDPOINT + "product", {
-      headers: {
-        "x-store": localStorage.getItem(ENV.APP_TOKEN)
-      }
-    });
-    return response;
-  }
   useEffect(() => {
-    callUserApi().then(response => {
-      // console.log(response.data.payload);
-      setTableData(response.data.payload);
-      setResponStatus(true)
-      //   console.log(tableData);
-    });
-    // console.log(data);
-  },[]);
-  console.log(props.product);
-  
+    dispatch(productEnableLoading());
+    dispatch(get_products());
+  }, [dispatch]);
+//  console.log(tableData);
   return (
     <div className="content-wrapper">
       <div className="page-header">
         <h3 className="page-title">
           <span className="page-title-icon bg-gradient-primary text-white mr-2">
-          <div className="d-flex h-100">
+            <div className="d-flex h-100">
               <FontAwesomeIcon
                 className="align-self-center mx-auto "
                 icon="shopping-bag"
@@ -66,58 +55,74 @@ function Product(props) {
             <div className="card-body">
               <h1 className="card-title">All Products</h1>
               <div className="table-responsive">
-                <Table header={["ID", "Name", "Date"]} apiEndpoint="user" responStatus={responStatus}>
-                  {tableData.map(data => (
-                   <Link to={"product-detail/"+ data._id}>
-                    <tr key={data._id}>
-                      <td>{data._id}</td>
-                      <td>{data.name}</td>
-                      <td>{data.create_date}</td>
-                    </tr>
-                   </Link>
-                  ))}
-                </Table>
+                {responStatus ? (
+                  Loading
+                ) : (
+                  <>
+                    <Table
+                      header={["ID", "Name", "Date"]}
+                      apiEndpoint="user"
+                      responStatus={responStatus}
+                    >
+                      {tableData && (
+                        <>
+                          {tableData.map(data => (
+                            <Link to={"product-detail/" + data._id}>
+                              <tr key={data._id}>
+                                <td>{data._id}</td>
+                                <td>{data.name}</td>
+                                <td>{data.create_date}</td>
+                              </tr>
+                            </Link>
+                          ))}
+                        </>
+                      )}
+                    </Table>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
         <div className="col-xl-4 col-lg-5 col-5 grid-margin">
           <div className="card">
-            <div className="card-body">
-              <div className="d-flex flex-row">
-                <div
-                  style={{
-                    backgroundImage: `url(${face18Jpg})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    margin: "0",
-                    padding: "0",
-                    height: "5rem",
-                    width: "5rem",
-                    content: "",
-                    borderRadius: "50%",
-                    marginRight: "2rem"
-                  }}
-                ></div>
-                <div>
-                  <h3>Alice Eve</h3>
-                  <h5>Project Manager</h5>
+            {currentUser && (
+              <div className="card-body">
+                <div className="d-flex flex-row">
+                  <div
+                    style={{
+                      backgroundImage: `url(${face18Jpg})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                      margin: "0",
+                      padding: "0",
+                      height: "5rem",
+                      width: "5rem",
+                      content: "",
+                      borderRadius: "50%",
+                      marginRight: "2rem"
+                    }}
+                  ></div>
+                  <div>
+                    <h3>{currentUser.username}</h3>
+                    <h5>{currentUser.role}</h5>
+                  </div>
+                </div>
+                <div className="pt-3">
+                  <div>
+                    <hr />
+                    <h5>Email</h5>
+                    <p className="pl-1">{currentUser.email}</p>
+                  </div>
+                  <div>
+                    <hr />
+                    <h5>Phone Number</h5>
+                    <p className="pl-1">{currentUser.phone}</p>
+                  </div>
                 </div>
               </div>
-              <div className="pt-3">
-                <div>
-                  <hr />
-                  <h5>Email</h5>
-                  <p className="pl-1">aliceeve@gmail.com</p>
-                </div>
-                <div>
-                  <hr />
-                  <h5>Phone Number</h5>
-                  <p className="pl-1">+(855) 012 554 665</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

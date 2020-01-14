@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LabelInfo, Loading, Modal, FormGroup } from "../../components";
-import { selectedProduct } from "../../actions/product-action";
+import { selectedProduct, productEnableLoading } from "../../actions/product-action";
 import { useDispatch, useSelector } from "react-redux";
+// import { enableLoading } from "../../actions/user-actions";
 // import { useHistory } from "react-router-dom";
 
 const ProductDetial = () => {
@@ -17,9 +18,12 @@ const ProductDetial = () => {
   });
 
   useEffect(() => {
+    dispatch(productEnableLoading());
     dispatch(selectedProduct(id));
   }, [dispatch, id]);
 
+  // console.log(product);
+  
   // assign data to value
   const modelClick = () => {
     if (!loading) {
@@ -75,8 +79,8 @@ const ProductDetial = () => {
                 <div className="col-sm-8">
                   <LabelInfo label="id" text={product._id} />
                   <LabelInfo label="name" text={product.name} />
-                  <LabelInfo label="categorie" text={product._categories[0]} />
-                  <LabelInfo label="image" text={product._images[0]} />
+                  {/* <LabelInfo label="categorie" text={product._categories[0]} /> */}
+                  {/* <LabelInfo label="image" text={product._images[0]} /> */}
                   <LabelInfo label="create date" text={product.create_date} />
                   <button
                     className="btn btn-danger"

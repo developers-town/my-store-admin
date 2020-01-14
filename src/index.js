@@ -49,15 +49,15 @@ ReactDOM.render(
     <Switch>
       <Route
         path="/admin"
-        render={props =>
-          !auth.getCurrentUser() ? (
+        render={props => {
+          return (!auth.getCurrentUser() ? (
             <Redirect to="/login" />
           ) : (
             <Provider store={store}>
               <Admin store={store} {...props} />
             </Provider>
-          )
-        }
+          ))
+        }}
       />
       <Route
         path="/login"

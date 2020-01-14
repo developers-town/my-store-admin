@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { Navbar, Sidebar } from "../../layouts";
 import { Route, Switch } from "react-router-dom";
 import routes from "../../routes.js";
 import Footer from "../Footer";
-import actionCallApi from "../../services/actionCallApi.js";
+import { useDispatch } from "react-redux";
+import { currentUser } from "../../actions/user-actions";
 
 function Admin(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(currentUser());
+  },[dispatch]);
   function getRoutes(routes) {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        actionCallApi().catch(err => {
-          if (err.response.status) {
-            window.localStorage.removeItem("userToken");
-            window.location.href = "/";
-          }
-        });
         return (
           <Route
             path={prop.layout + prop.path}

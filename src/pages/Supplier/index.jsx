@@ -1,39 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import ENV from "../../config/config.json";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import face18Jpg from "../../assets/images/faces/face18.jpg";
+import { Loading } from "../../components";
+import { enableLoading, getSupplier } from "../../actions/user-actions";
 
-function Supplier(props) {
-  const a = [1, 2, 3, 4, 5, 6];
-  const [tableData, setTableData] = useState([]);
-  const [responStatus,setResponStatus] = useState(false)
+function Supplier() {
+  const tableData = useSelector(state => state.user.suppliers);
+  const loading = useSelector(state => state.user.loading);
+  const dispatch = useDispatch();
 
-  async function callUserApi() {
-    const response = await axios.get(ENV.API_ENDPOINT + "supplier", {
-      headers: {
-        "x-store": localStorage.getItem(ENV.APP_TOKEN)
-      }
-    });
-    return response;
-  }
   useEffect(() => {
-    callUserApi().then(response => {
-      console.log(response);
-      setTableData(response.data.payload);
-      setResponStatus(true)
-      //   console.log(tableData);
-    });
-    // console.log(data);
-  },[]);
+    dispatch(enableLoading());
+    dispatch(getSupplier());
+  }, [dispatch]);
   return (
     <div className="content-wrapper">
       <div className="page-header">
         <h3 className="page-title">
           <span className="page-title-icon bg-gradient-primary text-white mr-2">
-          <div className="d-flex h-100">
+            <div className="d-flex h-100">
               <FontAwesomeIcon
                 className="align-self-center mx-auto "
                 icon="people-carry"
@@ -64,15 +51,23 @@ function Supplier(props) {
             <div className="card-body">
               <h1 className="card-title">All Suppliers</h1>
               <div className="table-responsive">
-                <Table header={["ID", "Name", "Role"]} apiEndpoint="user" responStatus={responStatus}>
-                  {tableData.map(data => (
-                    <tr key={data._id}>
-                      <td>{data._id}</td>
-                      <td>{data.username}</td>
-                      <td>{data.role}</td>
-                    </tr>
-                  ))}
-                </Table>
+                {loading ? (
+                  Loading
+                ) : (
+                  <Table
+                    header={["ID", "Name", "Role"]}
+                    apiEndpoint="user"
+                  >
+                    {tableData &&
+                      tableData.map(data => (
+                        <tr key={data._id}>
+                          <td>{data._id}</td>
+                          <td>{data.username}</td>
+                          <td>{data.role}</td>
+                        </tr>
+                      ))}
+                  </Table>
+                )}
               </div>
             </div>
           </div>

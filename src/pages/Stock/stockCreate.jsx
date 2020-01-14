@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { actionPost } from "../../services/actionCallApi";
 import FormGroup from "../../components/FormGroup";
-import Loading from "../../assets/images/rolling-loading.svg";
+// import Loading from "../../assets/images/rolling-loading.svg";
 
 const CreateStock = () => {
-  const isLoading = useState(false);
+  // const isLoading = useState(false);
   const responseStatus = useState({
     status: "",
     type: ""
   });
   return (
     <React.Fragment>
-      <div
+      {/* <div
         className={isLoading ? "fixed-top vh-100 d-flex" : "d-none"}
         style={{ backgroundColor: "rgba(255, 255, 255, .5)" }}
       >
         <img className="align-self-center mx-auto" src={Loading} alt="" />
-      </div>
+      </div> */}
       <div className="content-wrapper">
         <div className={"alert " + responseStatus.type} role="alert">
           {responseStatus.status}
