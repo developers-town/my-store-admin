@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import auth from "../../services/authService";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logoSvg from "../../assets/images/logo.svg";
-import logoMiniSvg from "../../assets/images/logo-mini.svg";
+// import logoSvg from "../../assets/images/logo.svg";
+// import logoMiniSvg from "../../assets/images/logo-mini.svg";
 import face4Jpg from "../../assets/images/faces/face4.jpg";
 
 function Navbar(props) {
@@ -16,11 +16,11 @@ function Navbar(props) {
     <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a className="navbar-brand brand-logo" href="index.html">
-            <img src={logoSvg} alt="logo" />
+          <a className="navbar-brand brand-logo" href="/">
+            <h3>NEXIOUS</h3>
           </a>
-          <a className="navbar-brand brand-logo-mini" href="index.html">
-            <img src={logoMiniSvg} alt="logo" />
+          <a className="navbar-brand brand-logo-mini" href="/">
+            <h3>NEXIOUS</h3>
           </a>
         </div>
       </div>
@@ -47,41 +47,6 @@ function Navbar(props) {
           </form>
         </div>
         <ul className="navbar-nav navbar-nav-right">
-          <li className="nav-item nav-profile dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              id="profileDropdown"
-              data-toggle="dropdown"
-              aria-expanded="false"
-              href={{}}
-            >
-              <div className="nav-profile-img">
-                <img src={face4Jpg} alt="face" />
-                <span className="availability-status online"></span>
-              </div>
-              <div className="nav-profile-text">
-                <p className="mb-1 text-black">{auth.getCurrentUser()}</p>
-              </div>
-            </a>
-            <div
-              className="dropdown-menu navbar-dropdown"
-              aria-labelledby="profileDropdown"
-            >
-              <a className="dropdown-item" href="/">
-                <i className="mdi mdi-cached mr-2 text-success"></i> Activity
-                Log{" "}
-              </a>
-              <div className="dropdown-divider"></div>
-              <a onClick={handleLogOut} className="dropdown-item" href="/">
-                <i className="mdi mdi-logout mr-2 text-primary"></i> Signout
-              </a>
-            </div>
-          </li>
-          <li className="nav-item d-none d-lg-block full-screen-link">
-            <a className="nav-link" href="/">
-              <i className="mdi mdi-fullscreen" id="fullscreen-button"></i>
-            </a>
-          </li>
           <li className="nav-item dropdown">
             <a
               className="nav-link count-indicator dropdown-toggle"
@@ -202,15 +167,35 @@ function Navbar(props) {
               <h6 className="p-3 mb-0 text-center">See all notifications</h6>
             </div>
           </li>
-          <li className="nav-item nav-logout d-none d-lg-block">
-            <a className="nav-link" href="/">
-              <i className="mdi mdi-power"></i>
+          <li className="nav-item nav-profile dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              id="profileDropdown"
+              data-toggle="dropdown"
+              aria-expanded="false"
+              href={{}}
+            >
+              <div className="nav-profile-img">
+                <img src={face4Jpg} alt="face" />
+                <span className="availability-status online"></span>
+              </div>
+              <div className="nav-profile-text">
+                <p className="mb-1 text-black">{auth.getCurrentUser()}</p>
+              </div>
             </a>
-          </li>
-          <li className="nav-item nav-settings d-none d-lg-block">
-            <a className="nav-link" href="/">
-              <i className="mdi mdi-format-line-spacing"></i>
-            </a>
+            <div
+              className="dropdown-menu navbar-dropdown"
+              aria-labelledby="profileDropdown"
+            >
+              <a className="dropdown-item" href="/">
+                <i className="mdi mdi-cached mr-2 text-success"></i> Activity
+                Log{" "}
+              </a>
+              <div className="dropdown-divider"></div>
+              <a onClick={handleLogOut} className="dropdown-item" href="/">
+                <i className="mdi mdi-logout mr-2 text-primary"></i> Signout
+              </a>
+            </div>
           </li>
         </ul>
         <button

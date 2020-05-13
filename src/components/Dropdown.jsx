@@ -29,7 +29,7 @@ const Dropdown = props => {
               onChange={props.onInputChange}
               className="form-control"
               type="text"
-              placeholder={props.label}
+              placeholder={"New " + props.label}
             />
           </div>
         ) : (

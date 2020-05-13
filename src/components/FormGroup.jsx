@@ -11,7 +11,7 @@ const FormGroup = props => {
         <input
           onChange={props.onInputChange}
           className="form-control"
-          value={props.value || ""}
+          value={props.value}
           type={props.inputType}
           placeholder={props.placeholder}
         />

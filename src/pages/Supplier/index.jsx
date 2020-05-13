@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
-import face18Jpg from "../../assets/images/faces/face18.jpg";
+// import face18Jpg from "../../assets/images/faces/face18.jpg";
 import { Loading } from "../../components";
 import { enableLoading, getSupplier } from "../../actions/user-actions";
 
@@ -15,6 +15,8 @@ function Supplier() {
     dispatch(enableLoading());
     dispatch(getSupplier());
   }, [dispatch]);
+  console.log(tableData);
+  
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -40,13 +42,13 @@ function Supplier() {
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">
             <li className="breadcrumb-item active" aria-current="page">
-              <span></span> Users{" "}
+              <span></span> Supplier{" "}
             </li>
           </ul>
         </nav>
       </div>
       <div className="row">
-        <div className="col-xl-8 col-lg-7 col-4 grid-margin">
+        <div className="col grid-margin">
           <div className="card">
             <div className="card-body">
               <h1 className="card-title">All Suppliers</h1>
@@ -55,15 +57,17 @@ function Supplier() {
                   Loading
                 ) : (
                   <Table
-                    header={["ID", "Name", "Role"]}
+                    header={["ID", "Name", "Email" , "Address" , "Date"]}
                     apiEndpoint="user"
                   >
                     {tableData &&
                       tableData.map(data => (
                         <tr key={data._id}>
                           <td>{data._id}</td>
-                          <td>{data.username}</td>
-                          <td>{data.role}</td>
+                          <td>{data.name}</td>
+                          <td>{data.email}</td>
+                          <td>{data.address}</td>
+                          <td>{data.create_date}</td>
                         </tr>
                       ))}
                   </Table>
@@ -72,48 +76,9 @@ function Supplier() {
             </div>
           </div>
         </div>
-        <div className="col-xl-4 col-lg-5 col-5 grid-margin">
-          <div className="card">
-            <div className="card-body">
-              <div className="d-flex flex-row">
-                <div
-                  style={{
-                    backgroundImage: `url(${face18Jpg})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    margin: "0",
-                    padding: "0",
-                    height: "5rem",
-                    width: "5rem",
-                    content: "",
-                    borderRadius: "50%",
-                    marginRight: "2rem"
-                  }}
-                ></div>
-                <div>
-                  <h3>Alice Eve</h3>
-                  <h5>Project Manager</h5>
-                </div>
-              </div>
-              <div className="pt-3">
-                <div>
-                  <hr />
-                  <h5>Email</h5>
-                  <p className="pl-1">aliceeve@gmail.com</p>
-                </div>
-                <div>
-                  <hr />
-                  <h5>Phone Number</h5>
-                  <p className="pl-1">+(855) 012 554 665</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div className="row">
-        <div className="col-4">
+        <div className="col">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">
@@ -153,7 +118,7 @@ function Supplier() {
             </div>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">

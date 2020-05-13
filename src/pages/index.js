@@ -14,6 +14,7 @@ import productCreate from './Product/productCreate.jsx'
 import userDetail from './User/userDetail.jsx'
 import createImport from './Import/createImport.jsx'
 import productDetail from './Product/productDetail'
+import stockDetail from './Stock/stockDetail'
 
 
 export  {
@@ -32,5 +33,6 @@ export  {
     productCreate,
     userDetail,
     createImport,
-    productDetail
+    productDetail,
+    stockDetail
 }
