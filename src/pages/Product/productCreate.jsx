@@ -5,8 +5,9 @@ import {
   productEnableLoading,
   // uploadImage,
   createProduct,
+  getBrands,
 } from "../../actions/product-action";
-import { FormGroup, Dropdown, Loading } from "../../components";
+import { FormGroup, Dropdown, Loading, BrandDropdown } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionPost } from "../../services/actionCallApi";
 let message = "";
@@ -14,6 +15,7 @@ let message = "";
 const ProductCreate = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.product.categories);
+  const brands = useSelector((state) => state.product.brands);
   const loading = useSelector((state) => state.product.loading);
   message = useSelector((state) => state.product.message);
   const [image, setImage] = useState(
@@ -38,6 +40,11 @@ const ProductCreate = () => {
   useEffect(() => {
     dispatch(productEnableLoading());
     dispatch(getCategories());
+
+    (async () => {
+      dispatch(await getBrands());
+    })()
+
   }, [dispatch]);
 
   useEffect(
@@ -70,10 +77,11 @@ const ProductCreate = () => {
 
     // upload image to server 
     const res = await actionPost("image/upload", formData);
-    setData({ ...data, _images: [res.data._id], _categorie: [newCategory] });
+    // setData({ ...data, _images: [res.data._id], _categorie: [newCategory] });
+    const body = {...data, _images: [res.data._id]};
 
     // post create product 
-    await dispatch(createProduct(data));
+    dispatch(await createProduct(body));
 
     // check status response 
     if (message === "Success") {
@@ -151,21 +159,18 @@ const ProductCreate = () => {
                   ></FormGroup>
                 </div>
                 <div className="flex-grow-1 pr-2">
-                  <FormGroup
-                    label="Product Brand"
-                    inputType="text"
-                    onInputChange={(e) =>
-                      setData({ ...data, _brand: e.target.value })
-                    }
-                    validation={data._brand.length < 3}
-                  ></FormGroup>
+                  <BrandDropdown
+                    label="Brand"
+                    dataOptions={brands}
+                    onDropdownChange={(e) => setData({...data, _brand: e.target.value})}
+                  />
                 </div>
                 <div className="flex-grow-1 pr-2">
                   {optionItem && (
                     <Dropdown
                       label="Category"
                       onDropdownChange={(e) =>
-                        setData({ ...data, _categorie: [e.target.value] })
+                        setData({ ...data, _categories: [e.target.value] })
                       }
                       onInputChange={(e) => setNewCategory(e.target.value)}
                       dataOptions={optionItem}

@@ -8,10 +8,13 @@ import {
   CREATE_PRODUCT,
   GET_CATEGORIES,
   RESPONSE_MESSAGE,
+  GET_BRANDS,
 } from "../actions/types";
 const initialState = {
   items: [],
   item: {},
+  brands: [],
+  categories: [],
   loading: false,
   message: "",
 };
@@ -33,6 +36,8 @@ const productReducer = (state = initialState, action) => {
       return { ...state, prodcutCreated: action.payload, loading: false };
     case GET_CATEGORIES:
       return { ...state, categories: action.payload, loading: false };
+    case GET_BRANDS: 
+      return { ...state, brands: action.payload, loading: false };
     case RESPONSE_MESSAGE:
       return { ...state, message: action.payload };
     default:

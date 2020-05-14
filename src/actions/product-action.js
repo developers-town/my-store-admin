@@ -8,6 +8,7 @@ import {
   CREATE_PRODUCT,
   GET_CATEGORIES,
   RESPONSE_MESSAGE,
+  GET_BRANDS,
 } from "./types";
 import { actionGet, actionPost } from "../services/actionCallApi";
 
@@ -59,7 +60,7 @@ export const uploadImage = (data) => {
   };
 };
 
-export const createProduct = (data) => async (dispatch) => {
+export const createProduct = async (data) => async (dispatch) => {
   const response = await actionPost("product", data);
   console.log(response);
   
@@ -80,3 +81,12 @@ export const getCategories = () => async (dispatch) => {
     payload: response.data.payload,
   });
 };
+
+export const getBrands = async () => {
+  const response = await actionGet("brands");
+
+  return {
+    type: GET_BRANDS,
+    payload: response.data.payload,
+  }
+}

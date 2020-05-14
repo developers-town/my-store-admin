@@ -17,7 +17,7 @@ const Dropdown = props => {
           selection category
           </option>
           {props.dataOptions.map(item => (
-            <option key={item._id} value={item.name}>
+            <option key={item._id} value={item._id}>
               {item.name}
             </option>
           ))}
