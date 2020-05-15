@@ -2,12 +2,21 @@ import {
   SELECTED_PRODUCT,
   PRODUCTS,
   PRODUCT_ENABLE_LAODING,
-  GET_STOCK
+  GET_STOCK,
+  SELECTED_STOCK,
+  UPLOAD_IMAGE,
+  CREATE_PRODUCT,
+  GET_CATEGORIES,
+  RESPONSE_MESSAGE,
+  GET_BRANDS,
 } from "../actions/types";
 const initialState = {
   items: [],
   item: {},
-  loading: false
+  brands: [],
+  categories: [],
+  loading: false,
+  message: "",
 };
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +28,18 @@ const productReducer = (state = initialState, action) => {
       return { ...state, loading: action.payload };
     case GET_STOCK:
       return { ...state, stocks: action.payload, loading: false };
+    case SELECTED_STOCK:
+      return { ...state, stock: action.payload, loading: false };
+    case UPLOAD_IMAGE:
+      return { ...state, imageUploaded: action.payload, loading: false };
+    case CREATE_PRODUCT:
+      return { ...state, prodcutCreated: action.payload, loading: false };
+    case GET_CATEGORIES:
+      return { ...state, categories: action.payload, loading: false };
+    case GET_BRANDS: 
+      return { ...state, brands: action.payload, loading: false };
+    case RESPONSE_MESSAGE:
+      return { ...state, message: action.payload };
     default:
       return state;
   }

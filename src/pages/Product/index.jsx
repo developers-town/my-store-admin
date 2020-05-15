@@ -2,23 +2,26 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
-import face18Jpg from "../../assets/images/faces/face18.jpg";
+// import face18Jpg from "../../assets/images/faces/face18.jpg";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { get_products, productEnableLoading } from "../../actions/product-action.js";
+import {
+  get_products,
+  productEnableLoading
+} from "../../actions/product-action.js";
 import { Loading } from "../../components/index.js";
 
 function Product() {
   const tableData = useSelector(state => state.product.items);
   const responStatus = useSelector(state => state.product.loading);
-  const currentUser = useSelector(state => state.user.CURRENT_USER);
+  // const currentUser = useSelector(state => state.user.CURRENT_USER);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(productEnableLoading());
     dispatch(get_products());
   }, [dispatch]);
-//  console.log(tableData);
+   console.log(tableData);
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -50,7 +53,7 @@ function Product() {
         </nav>
       </div>
       <div className="row">
-        <div className="col-xl-8 col-lg-7 col-4 grid-margin">
+        <div className="col grid-margin">
           <div className="card">
             <div className="card-body">
               <h1 className="card-title">All Products</h1>
@@ -60,20 +63,23 @@ function Product() {
                 ) : (
                   <>
                     <Table
-                      header={["ID", "Name", "Date"]}
+                      header={["ID", "Name", "Date" , "Picture"]}
                       apiEndpoint="user"
                       responStatus={responStatus}
                     >
                       {tableData && (
                         <>
                           {tableData.map(data => (
-                            <Link to={"product-detail/" + data._id}>
-                              <tr key={data._id}>
-                                <td>{data._id}</td>
-                                <td>{data.name}</td>
-                                <td>{data.create_date}</td>
-                              </tr>
-                            </Link>
+                            <tr key={data._id}>
+                              <td>
+                                <Link to={"/admin/product-detail/" + data._id}>
+                                  {data._id}
+                                </Link>
+                              </td>
+                              <td>{data.name}</td>
+                              <td>{data.create_date}</td>
+                              <td> <img className="img-fluid" src={data.images[0].url} alt="" /></td>
+                            </tr>
                           ))}
                         </>
                       )}
@@ -84,50 +90,9 @@ function Product() {
             </div>
           </div>
         </div>
-        <div className="col-xl-4 col-lg-5 col-5 grid-margin">
-          <div className="card">
-            {currentUser && (
-              <div className="card-body">
-                <div className="d-flex flex-row">
-                  <div
-                    style={{
-                      backgroundImage: `url(${face18Jpg})`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                      margin: "0",
-                      padding: "0",
-                      height: "5rem",
-                      width: "5rem",
-                      content: "",
-                      borderRadius: "50%",
-                      marginRight: "2rem"
-                    }}
-                  ></div>
-                  <div>
-                    <h3>{currentUser.username}</h3>
-                    <h5>{currentUser.role}</h5>
-                  </div>
-                </div>
-                <div className="pt-3">
-                  <div>
-                    <hr />
-                    <h5>Email</h5>
-                    <p className="pl-1">{currentUser.email}</p>
-                  </div>
-                  <div>
-                    <hr />
-                    <h5>Phone Number</h5>
-                    <p className="pl-1">{currentUser.phone}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
       <div className="row">
-        <div className="col-4">
+        <div className="col">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">
@@ -167,7 +132,7 @@ function Product() {
             </div>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col">
           <div className="card">
             <div className="card-body">
               <div className="d-flex flex-row">

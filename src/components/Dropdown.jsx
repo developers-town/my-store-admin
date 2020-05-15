@@ -17,7 +17,7 @@ const Dropdown = props => {
           selection category
           </option>
           {props.dataOptions.map(item => (
-            <option key={item._id} value={item.name}>
+            <option key={item._id} value={item._id}>
               {item.name}
             </option>
           ))}
@@ -29,7 +29,7 @@ const Dropdown = props => {
               onChange={props.onInputChange}
               className="form-control"
               type="text"
-              placeholder={props.label}
+              placeholder={"New " + props.label}
             />
           </div>
         ) : (

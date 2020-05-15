@@ -13,7 +13,8 @@ import {
   productCreate,
   userDetail,
   createImport,
-  productDetail
+  productDetail,
+  stockDetail
 } from "./pages";
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
     name: "StockCreate",
     component: stockCreate,
     layout: "/admin"
+  },{
+    path:"/stock-detail",
+    name:"StockDetail",
+    component: stockDetail,
+    layout:"/admin"
   },
   {
     path: "/user",

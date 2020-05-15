@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LabelInfo, Loading, Modal, FormGroup } from "../../components";
-import {
-  selectedProduct,
-  productEnableLoading,
-} from "../../actions/product-action";
+import { selectedStock, productEnableLoading } from "../../actions/product-action";
 import { useDispatch, useSelector } from "react-redux";
 // import { enableLoading } from "../../actions/user-actions";
 // import { useHistory } from "react-router-dom";
 
-const ProductDetial = () => {
+const StockDetail = () => {
   const { id } = useParams();
-  const product = useSelector((state) => state.product.item);
-  const loading = useSelector((state) => state.product.loading);
+  const stock = useSelector(state => state.product.stock);
+  const loading = useSelector(state => state.product.loading);
   const dispatch = useDispatch();
   // const history = useHistory();
   const [data, setData] = useState({
     name: "",
-    _categories: "",
+    _categories: ""
   });
 
   useEffect(() => {
     dispatch(productEnableLoading());
-    dispatch(selectedProduct(id));
+    dispatch(selectedStock(id));
   }, [dispatch, id]);
 
   // console.log(product);
-
+  
   // assign data to value
   const modelClick = () => {
     if (!loading) {
-      setData(product);
+      setData(stock);
     }
   };
 
@@ -38,7 +35,7 @@ const ProductDetial = () => {
     // dispatch(updateSlectedUser(id, data));
   };
 
-  console.log(product);
+  console.log(stock);
 
   return (
     <React.Fragment>
@@ -48,7 +45,7 @@ const ProductDetial = () => {
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
               <i className="mdi mdi-account"></i>
             </span>
-            Product Detial{""}
+            Stock Detial{""}
           </h3>
           <nav aria-label="breadcrumb">
             <ul className="breadcrumb">
@@ -56,10 +53,10 @@ const ProductDetial = () => {
                 className="breadcrumb-item breadcrumb-link"
                 aria-current="page"
               >
-                <Link to="/admin/product"> Products </Link>
+                <Link to="/admin/stock"> Stock </Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                <span></span> Product detail{" "}
+                <span></span> Stock detail{" "}
               </li>
             </ul>
           </nav>
@@ -68,23 +65,23 @@ const ProductDetial = () => {
           Loading
         ) : (
           <>
-            {product.images && (
-              <div className="row justify-content-center">
-                <div className="col-sm-4 p-3 text-center">
-                  <img
-                    className="img-fluid"
-                    style={{ width: "200px" }}
-                    src={product.images[0].url}
-                    alt=""
-                  />
-                </div>
+            <div className="row justify-content-center">
+              <div className="col-sm-4 p-3 text-center">
+                <img
+                  className="img-fluid"
+                  style={{ width: "200px" }}
+                  src="https://static.bhphoto.com/images/images2500x2500/1571097351_1507482.jpg"
+                  alt=""
+                />
+                <p className="text-small pointer mt-2">Change Picture</p>
+              </div>
+              {stock && (
                 <div className="col-sm-8">
-                  <LabelInfo label="id" text={product._id} />
-                  <LabelInfo label="name" text={product.name} />
-                  <LabelInfo label="brand" text={product.brand.name}/>
-                  <LabelInfo label="categorie" text={product.categories[0].name} />
-                  {/* <LabelInfo label="image" text={product._images[0]} /> */}
-                  <LabelInfo label="create date" text={product.create_date} />
+                  <LabelInfo label="id" text={stock._id} />
+                  <LabelInfo label="name" text={stock.name} />
+                  {/* <LabelInfo label="categorie" text={stock._categories[0]} /> */}
+                  {/* <LabelInfo label="image" text={stock._images[0]} /> */}
+                  <LabelInfo label="create date" text={stock.create_date} />
                   <button
                     className="btn btn-danger"
                     type="button"
@@ -95,16 +92,16 @@ const ProductDetial = () => {
                     Edit
                   </button>
                   <Modal
-                    title="Edit Product Info"
+                    title="Edit Stock Info"
                     buttonTitle="Save Change"
-                    saveChange={(e) => onSaveChange()}
+                    saveChange={e => onSaveChange()}
                   >
                     <form action="">
                       <div className="d-flex">
                         <div className="col-4 overflow-hidden my-3">
                           <img
                             className="img-fluid"
-                            src={product.images[0].url}
+                            src="https://static.bhphoto.com/images/images2500x2500/1571097351_1507482.jpg"
                             alt=""
                           />
                         </div>
@@ -123,7 +120,7 @@ const ProductDetial = () => {
                         </div>
                       </div>
                       <FormGroup
-                        onInputChange={(e) =>
+                        onInputChange={e =>
                           setData({ ...data, name: e.target.value })
                         }
                         validation={data.name.length < 4}
@@ -131,7 +128,7 @@ const ProductDetial = () => {
                         value={data.name}
                       ></FormGroup>
                       <FormGroup
-                        onInputChange={(e) =>
+                        onInputChange={e =>
                           setData({ ...data, _categories: e.target.value })
                         }
                         validation={data._categories.length < 4}
@@ -141,12 +138,12 @@ const ProductDetial = () => {
                     </form>
                   </Modal>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </>
         )}
       </div>
     </React.Fragment>
   );
 };
-export default ProductDetial;
+export default StockDetail;

@@ -4,6 +4,7 @@ import LabelInfo from './LabelInfo'
 import Modal from './Modal'
 import Loading from './Loading'
 import Alert from './Alert'
+import BrandDropdown from './BrandDropdown'
 
 export{
     FormGroup,
@@ -11,5 +12,6 @@ export{
     LabelInfo,
     Modal,
     Loading,
-    Alert
+    Alert,
+    BrandDropdown,
 }
