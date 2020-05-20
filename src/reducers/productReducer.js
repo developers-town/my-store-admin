@@ -9,6 +9,10 @@ import {
   GET_CATEGORIES,
   RESPONSE_MESSAGE,
   GET_BRANDS,
+  MODAL_CREATE_PRODUCT,
+  BUTTON_LOADING,
+  CREATE_PRODUCT_UNIT,
+  CREATE_STOCK,
 } from "../actions/types";
 const initialState = {
   items: [],
@@ -17,6 +21,7 @@ const initialState = {
   categories: [],
   loading: false,
   message: "",
+  buttonLoading: false,
 };
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -33,13 +38,36 @@ const productReducer = (state = initialState, action) => {
     case UPLOAD_IMAGE:
       return { ...state, imageUploaded: action.payload, loading: false };
     case CREATE_PRODUCT:
-      return { ...state, prodcutCreated: action.payload, loading: false };
+      return {
+        ...state,
+        productCreated: action.payload,
+        buttonLoading: false,
+        modalStep: "createProductUnit",
+      };
     case GET_CATEGORIES:
       return { ...state, categories: action.payload, loading: false };
-    case GET_BRANDS: 
+    case GET_BRANDS:
       return { ...state, brands: action.payload, loading: false };
     case RESPONSE_MESSAGE:
       return { ...state, message: action.payload };
+    case MODAL_CREATE_PRODUCT:
+      return { ...state, modalStep: action.payload };
+    case BUTTON_LOADING:
+      return { ...state, buttonLoading: action.payload };
+    case CREATE_PRODUCT_UNIT:
+      return {
+        ...state,
+        productUnitCreated: action.payload,
+        modalStep: "createStock",
+        buttonLoading: false,
+      };
+    case CREATE_STOCK:
+      return {
+        ...state,
+        stockCreated: action.payload,
+        modalStep: "createSuccess",
+        buttonLoading: false,
+      };
     default:
       return state;
   }

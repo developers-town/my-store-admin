@@ -79,12 +79,29 @@ const ProductDetial = () => {
                   />
                 </div>
                 <div className="col-sm-8">
-                  <LabelInfo label="id" text={product._id} />
-                  <LabelInfo label="name" text={product.name} />
-                  <LabelInfo label="brand" text={product.brand.name}/>
-                  <LabelInfo label="categorie" text={product.categories[0].name} />
+                  <LabelInfo
+                    label="id"
+                    text={product._id ? product._id : "N/A"}
+                  />
+                  <LabelInfo
+                    label="name"
+                    text={product.name ? product.name : "N/A"}
+                  />
+                  <LabelInfo
+                    label="brand"
+                    text={product.brand.name ? product.brand.name : "N/A"}
+                  />
+                  <LabelInfo
+                    label="categorie"
+                    text={
+                      product.categories[0] ? product.categories[0].name : "N/A"
+                    }
+                  />
                   {/* <LabelInfo label="image" text={product._images[0]} /> */}
-                  <LabelInfo label="create date" text={product.create_date} />
+                  <LabelInfo
+                    label="create date"
+                    text={product.create_date ? product.create_date : "N/A"}
+                  />
                   <button
                     className="btn btn-danger"
                     type="button"

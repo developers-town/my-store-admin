@@ -9,6 +9,10 @@ import {
   GET_CATEGORIES,
   RESPONSE_MESSAGE,
   GET_BRANDS,
+  MODAL_CREATE_PRODUCT,
+  BUTTON_LOADING,
+  CREATE_PRODUCT_UNIT,
+  CREATE_STOCK,
 } from "./types";
 import { actionGet, actionPost } from "../services/actionCallApi";
 
@@ -62,8 +66,8 @@ export const uploadImage = (data) => {
 
 export const createProduct = async (data) => async (dispatch) => {
   const response = await actionPost("product", data);
-  console.log(response);
-  
+  console.log(response.data.message);
+
   dispatch({
     type: CREATE_PRODUCT,
     payload: response.data.payload,
@@ -88,5 +92,39 @@ export const getBrands = async () => {
   return {
     type: GET_BRANDS,
     payload: response.data.payload,
-  }
-}
+  };
+};
+
+export const modalCreateProduct = async (data) => {
+  return {
+    type: MODAL_CREATE_PRODUCT,
+    payload: data,
+  };
+};
+
+export const buttonLoading = async (data) => {
+  return {
+    type: BUTTON_LOADING,
+    payload: data,
+  };
+};
+
+export const createProductUnit = async (data) => async (dispatch) => {
+  const response = await actionPost("product-units", data);
+  dispatch({
+    type: CREATE_PRODUCT_UNIT,
+    payload: response.data.payload,
+  });
+};
+
+export const createStock = async (data) => async (dispatch) => {
+  const response = await actionPost("stocks", data);
+  dispatch({
+    type: CREATE_STOCK,
+    payload: response.data.payload,
+  });
+  dispatch({
+    type: RESPONSE_MESSAGE,
+    payload: response.data.message,
+  });
+};

@@ -1,7 +1,6 @@
 import React from "react";
 
 export default ({ label, onDropdownChange, dataOptions }) => {
-
   return (
     <div className="form-group">
       <label htmlFor="">
@@ -12,7 +11,8 @@ export default ({ label, onDropdownChange, dataOptions }) => {
         defaultValue=""
         onChange={onDropdownChange}
       >
-        {dataOptions.map(item => (
+        <option value="N/A">Select Brand</option>
+        {dataOptions.map((item) => (
           <option key={item._id} value={item._id}>
             {item.name}
           </option>

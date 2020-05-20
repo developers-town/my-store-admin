@@ -7,21 +7,29 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   get_products,
-  productEnableLoading
+  productEnableLoading,
+  modalCreateProduct,
 } from "../../actions/product-action.js";
-import { Loading } from "../../components/index.js";
+import { Loading, ModalForm } from "../../components/index.js";
+import ProductCreate from "./productCreate";
+import StockCreate from "../Stock/stockCreate";
+import ProdcutUnit from "./productUnit"
+import ProdcutCreatedSucess from "./productCreatedSuccess";
 
 function Product() {
-  const tableData = useSelector(state => state.product.items);
-  const responStatus = useSelector(state => state.product.loading);
-  // const currentUser = useSelector(state => state.user.CURRENT_USER);
+  const tableData = useSelector((state) => state.product.items);
+  const responStatus = useSelector((state) => state.product.loading);
+  const modalStep = useSelector((state) => state.product.modalStep);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(productEnableLoading());
     dispatch(get_products());
+    (async () => {
+      dispatch(await modalCreateProduct("createProduct"));
+    })();
   }, [dispatch]);
-   console.log(tableData);
+  console.log(tableData);
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -37,11 +45,15 @@ function Product() {
             </div>
           </span>
           Product{""}
-          <Link to="/admin/product-create">
-            <button className="btn btn-outline-primary ml-2">
-              Create Product
-            </button>
-          </Link>
+          {/* <Link to="/admin/product-create"> */}
+          <button
+            className="btn btn-outline-primary ml-2"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Create Product
+          </button>
+          {/* </Link> */}
         </h3>
         <div></div>
         <nav aria-label="breadcrumb">
@@ -52,6 +64,12 @@ function Product() {
           </ul>
         </nav>
       </div>
+      <ModalForm>
+        {modalStep === "createProduct" && <ProductCreate />}
+        {modalStep === "createProductUnit" && <ProdcutUnit />}
+        {modalStep === "createStock" && <StockCreate />}
+        {modalStep === "createSuccess" && <ProdcutCreatedSucess/>}
+      </ModalForm>
       <div className="row">
         <div className="col grid-margin">
           <div className="card">
@@ -63,13 +81,13 @@ function Product() {
                 ) : (
                   <>
                     <Table
-                      header={["ID", "Name", "Date" , "Picture"]}
+                      header={["ID", "Name", "Date", "Picture"]}
                       apiEndpoint="user"
                       responStatus={responStatus}
                     >
                       {tableData && (
                         <>
-                          {tableData.map(data => (
+                          {tableData.map((data) => (
                             <tr key={data._id}>
                               <td>
                                 <Link to={"/admin/product-detail/" + data._id}>
@@ -78,7 +96,14 @@ function Product() {
                               </td>
                               <td>{data.name}</td>
                               <td>{data.create_date}</td>
-                              <td> <img className="img-fluid" src={data.images[0].url} alt="" /></td>
+                              <td>
+                                {" "}
+                                <img
+                                  className="img-fluid"
+                                  src={data.images[0].url}
+                                  alt=""
+                                />
+                              </td>
                             </tr>
                           ))}
                         </>
@@ -176,7 +201,7 @@ function Product() {
     </div>
   );
 }
-const mapStateToProps = state => ({
-  product: state
+const mapStateToProps = (state) => ({
+  product: state,
 });
 export default connect(mapStateToProps)(Product);
