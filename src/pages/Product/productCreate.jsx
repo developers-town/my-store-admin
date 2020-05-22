@@ -21,7 +21,7 @@ const ProductCreate = () => {
   );
   const [data, setData] = useState({
     name: "",
-    _categorie: [],
+    _categories: [],
     _brand: "",
     _images: [],
   });
@@ -82,7 +82,7 @@ const ProductCreate = () => {
     const body = {
       ...data,
       _images: [res.data._id],
-      _categorie: newCategory.name ? [createdCategory] : data._categorie,
+      _categories: newCategory.name ? [createdCategory] : data._categories,
     };
 
     dispatch(await createProduct(body));
@@ -136,14 +136,14 @@ const ProductCreate = () => {
                 <Dropdown
                   label="Category"
                   onDropdownChange={(e) =>
-                    setData({ ...data, _categorie: [e.target.value] })
+                    setData({ ...data, _categories: [e.target.value] })
                   }
                   onInputChange={(e) =>
                     setNewCategory({ ...newCategory, name: e.target.value })
                   }
                   dataOptions={optionItem}
-                  // validation={data._categorie[0].length < 3}
-                  addNewCategory={data._categorie[0] === "0000"}
+                  // validation={data._categories[0].length < 3}
+                  addNewCategory={data._categories[0] === "0000"}
                 />
               )}
             </div>
