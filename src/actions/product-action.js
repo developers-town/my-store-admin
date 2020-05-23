@@ -66,8 +66,6 @@ export const uploadImage = (data) => {
 
 export const createProduct = async (data) => async (dispatch) => {
   const response = await actionPost("product", data);
-  console.log(response.data.message);
-
   dispatch({
     type: CREATE_PRODUCT,
     payload: response.data.payload,

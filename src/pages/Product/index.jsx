@@ -98,11 +98,13 @@ function Product() {
                               <td>{data.create_date}</td>
                               <td>
                                 {" "}
-                                <img
-                                  className="img-fluid"
-                                  src={data.images[0].url}
-                                  alt=""
-                                />
+                                {data.images && (
+                                  <img
+                                    className="img-fluid"
+                                    src={data.images[0].url}
+                                    alt=""
+                                  />
+                                )}
                               </td>
                             </tr>
                           ))}

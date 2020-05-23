@@ -65,7 +65,7 @@ const CreateStock = () => {
               <button
                 onClick={handleCreateClick}
                 className="btn btn-block btn-primary"
-                disabled={data.quantity.length < 1}
+                disabled={!data.quantity}
               >
                 {loading ? Loading : "Create Stock"}
               </button>

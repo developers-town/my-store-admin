@@ -51,7 +51,7 @@ export default function ProductUnit() {
                 onInputChange={(e) =>
                   setData({ ...data, quantity: e.target.value })
                 }
-                validation={data.quantity.length < 1}
+                validation={!data.quantity}
               ></FormGroup>
               <FormGroup
                 label="Max-order"
@@ -60,7 +60,7 @@ export default function ProductUnit() {
                 onInputChange={(e) =>
                   setData({ ...data, max_order: e.target.value })
                 }
-                validation={data.max_order.length < 1}
+                validation={!data.max_order}
               ></FormGroup>
               <FormGroup
                 label="Price"
@@ -69,7 +69,7 @@ export default function ProductUnit() {
                 onInputChange={(e) =>
                   setData({ ...data, price: e.target.value })
                 }
-                validation={data.price.length < 1}
+                validation={!data.price}
               ></FormGroup>
               <FormGroup
                 label="Name"
@@ -78,18 +78,14 @@ export default function ProductUnit() {
                 onInputChange={(e) =>
                   setData({ ...data, name: e.target.value })
                 }
-                validation={data.name.length < 3}
+                validation={!data.name}
               ></FormGroup>
             </div>
             <div>
               <button
                 onClick={handleCreateClick}
                 disabled={
-                  data.quantity.length < 1 &&
-                  data.max_order.length < 1 &&
-                  data._product.length < 1 &&
-                  data.price.length < 1 &&
-                  data.name.length < 3
+                  !data.quantity || !data.max_order || !data.price || !data.name
                 }
                 className="btn btn-block btn-primary"
               >

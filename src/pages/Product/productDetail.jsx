@@ -71,12 +71,14 @@ const ProductDetial = () => {
             {product.images && (
               <div className="row justify-content-center">
                 <div className="col-sm-4 p-3 text-center">
-                  <img
-                    className="img-fluid"
-                    style={{ width: "200px" }}
-                    src={product.images[0].url}
-                    alt=""
-                  />
+                  {product.images && (
+                    <img
+                      className="img-fluid"
+                      style={{ width: "200px" }}
+                      src={product.images[0].url}
+                      alt=""
+                    />
+                  )}
                 </div>
                 <div className="col-sm-8">
                   <LabelInfo
@@ -103,7 +105,7 @@ const ProductDetial = () => {
                     text={product.create_date ? product.create_date : "N/A"}
                   />
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-info"
                     type="button"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
@@ -119,11 +121,13 @@ const ProductDetial = () => {
                     <form action="">
                       <div className="d-flex">
                         <div className="col-4 overflow-hidden my-3">
-                          <img
-                            className="img-fluid"
-                            src={product.images[0].url}
-                            alt=""
-                          />
+                          {product.images && (
+                            <img
+                              className="img-fluid"
+                              src={product.images[0].url}
+                              alt=""
+                            />
+                          )}
                         </div>
                         <div className="align-self-end pb-2">
                           <label

@@ -32,6 +32,7 @@ const ProductCreate = () => {
     name: "",
   });
   const [formData, SetFromData] = useState();
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     dispatch(productEnableLoading());
@@ -53,8 +54,9 @@ const ProductCreate = () => {
 
   const createDataImage = async (e) => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    formData.append("file", e.target.files[0]);
     SetFromData(formData);
+    setIsChanged(true);
     setImage(URL.createObjectURL(e.target.files[0]));
   };
 
@@ -72,7 +74,7 @@ const ProductCreate = () => {
     (async () => {
       dispatch(await buttonLoading(true));
     })();
-    const res = await actionPost("image/upload", formData);
+    const res = await actionPost("files/upload", formData);
     let createdCategory = "";
     if (newCategory.name) {
       const response = await actionPost("categories", newCategory);
@@ -150,7 +152,9 @@ const ProductCreate = () => {
             <div>
               <button
                 onClick={createNewProduct}
-                disabled={data.name.length < 3}
+                disabled={
+                  !data.name || !data._brand || !isChanged || !data._categories
+                }
                 className="btn btn-block btn-primary"
               >
                 {loading ? Loading : "Create Now"}
