@@ -13,7 +13,7 @@ import {
 import { Loading, ModalForm } from "../../components/index.js";
 import ProductCreate from "./productCreate";
 import StockCreate from "../Stock/stockCreate";
-import ProdcutUnit from "./productUnit"
+import ProdcutUnit from "./productUnit";
 import ProdcutCreatedSucess from "./productCreatedSuccess";
 
 function Product() {
@@ -45,7 +45,6 @@ function Product() {
             </div>
           </span>
           Product{""}
-          {/* <Link to="/admin/product-create"> */}
           <button
             className="btn btn-outline-primary ml-2"
             data-toggle="modal"
@@ -68,7 +67,7 @@ function Product() {
         {modalStep === "createProduct" && <ProductCreate />}
         {modalStep === "createProductUnit" && <ProdcutUnit />}
         {modalStep === "createStock" && <StockCreate />}
-        {modalStep === "createSuccess" && <ProdcutCreatedSucess/>}
+        {modalStep === "createSuccess" && <ProdcutCreatedSucess />}
       </ModalForm>
       <div className="row">
         <div className="col grid-margin">
