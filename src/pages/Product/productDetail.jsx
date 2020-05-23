@@ -71,22 +71,41 @@ const ProductDetial = () => {
             {product.images && (
               <div className="row justify-content-center">
                 <div className="col-sm-4 p-3 text-center">
-                  <img
-                    className="img-fluid"
-                    style={{ width: "200px" }}
-                    src={product.images[0].url}
-                    alt=""
-                  />
+                  {product.images && (
+                    <img
+                      className="img-fluid"
+                      style={{ width: "200px" }}
+                      src={product.images[0].url}
+                      alt=""
+                    />
+                  )}
                 </div>
                 <div className="col-sm-8">
-                  <LabelInfo label="id" text={product._id} />
-                  <LabelInfo label="name" text={product.name} />
-                  <LabelInfo label="brand" text={product.brand.name}/>
-                  <LabelInfo label="categorie" text={product.categories[0].name} />
+                  <LabelInfo
+                    label="id"
+                    text={product._id ? product._id : "N/A"}
+                  />
+                  <LabelInfo
+                    label="name"
+                    text={product.name ? product.name : "N/A"}
+                  />
+                  <LabelInfo
+                    label="brand"
+                    text={product.brand.name ? product.brand.name : "N/A"}
+                  />
+                  <LabelInfo
+                    label="categorie"
+                    text={
+                      product.categories[0] ? product.categories[0].name : "N/A"
+                    }
+                  />
                   {/* <LabelInfo label="image" text={product._images[0]} /> */}
-                  <LabelInfo label="create date" text={product.create_date} />
+                  <LabelInfo
+                    label="create date"
+                    text={product.create_date ? product.create_date : "N/A"}
+                  />
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-info"
                     type="button"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
@@ -102,11 +121,13 @@ const ProductDetial = () => {
                     <form action="">
                       <div className="d-flex">
                         <div className="col-4 overflow-hidden my-3">
-                          <img
-                            className="img-fluid"
-                            src={product.images[0].url}
-                            alt=""
-                          />
+                          {product.images && (
+                            <img
+                              className="img-fluid"
+                              src={product.images[0].url}
+                              alt=""
+                            />
+                          )}
                         </div>
                         <div className="align-self-end pb-2">
                           <label

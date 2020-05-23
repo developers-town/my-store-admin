@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LabelInfo, Loading, Modal, FormGroup } from "../../components";
-import { selectedStock, productEnableLoading } from "../../actions/product-action";
+import {
+  selectedStock,
+  productEnableLoading,
+} from "../../actions/product-action";
 import { useDispatch, useSelector } from "react-redux";
 // import { enableLoading } from "../../actions/user-actions";
 // import { useHistory } from "react-router-dom";
 
 const StockDetail = () => {
   const { id } = useParams();
-  const stock = useSelector(state => state.product.stock);
-  const loading = useSelector(state => state.product.loading);
+  const stock = useSelector((state) => state.product.stock);
+  const loading = useSelector((state) => state.product.loading);
   const dispatch = useDispatch();
   // const history = useHistory();
   const [data, setData] = useState({
     name: "",
-    _categories: ""
+    _categories: "",
   });
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const StockDetail = () => {
   }, [dispatch, id]);
 
   // console.log(product);
-  
+
   // assign data to value
   const modelClick = () => {
     if (!loading) {
@@ -77,11 +80,24 @@ const StockDetail = () => {
               </div>
               {stock && (
                 <div className="col-sm-8">
-                  <LabelInfo label="id" text={stock._id} />
-                  <LabelInfo label="name" text={stock.name} />
-                  {/* <LabelInfo label="categorie" text={stock._categories[0]} /> */}
+                  <LabelInfo label="id" text={stock._id ? stock._id : "N/A"} />
+                  <LabelInfo
+                    label="name"
+                    text={stock.name ? stock.name : "N/A"}
+                  />
+                  <LabelInfo
+                    label="categorie"
+                    text={
+                      stock._categories[0].name
+                        ? stock._categories[0].name
+                        : "N/A"
+                    }
+                  />
                   {/* <LabelInfo label="image" text={stock._images[0]} /> */}
-                  <LabelInfo label="create date" text={stock.create_date} />
+                  <LabelInfo
+                    label="create date"
+                    text={stock.create_date ? stock.create_date : "N/A"}
+                  />
                   <button
                     className="btn btn-danger"
                     type="button"
@@ -94,7 +110,7 @@ const StockDetail = () => {
                   <Modal
                     title="Edit Stock Info"
                     buttonTitle="Save Change"
-                    saveChange={e => onSaveChange()}
+                    saveChange={(e) => onSaveChange()}
                   >
                     <form action="">
                       <div className="d-flex">
@@ -120,7 +136,7 @@ const StockDetail = () => {
                         </div>
                       </div>
                       <FormGroup
-                        onInputChange={e =>
+                        onInputChange={(e) =>
                           setData({ ...data, name: e.target.value })
                         }
                         validation={data.name.length < 4}
@@ -128,7 +144,7 @@ const StockDetail = () => {
                         value={data.name}
                       ></FormGroup>
                       <FormGroup
-                        onInputChange={e =>
+                        onInputChange={(e) =>
                           setData({ ...data, _categories: e.target.value })
                         }
                         validation={data._categories.length < 4}
